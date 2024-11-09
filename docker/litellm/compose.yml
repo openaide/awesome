@@ -1,0 +1,9 @@
+###
+services:
+  litellm:
+    build:
+      context: ./
+      args:
+        target: runtime
+    image: openaide/litellm-osi
+

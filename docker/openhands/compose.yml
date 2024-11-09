@@ -1,0 +1,29 @@
+###
+services:
+  openhands:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: openaide/openhands
+    environment:
+      # TODO - can only be done from the UI
+      # - LLM_MODEL=gpt-4o-mini
+      # - LLM_API_KEY=${LLM_API_KEY:-sk-1234}
+      # - LLM_BASE_URL=http://litellm:4000
+      # - LLM_BASE_URL=http://host.docker.internal:4000
+      - SANDBOX_RUNTIME_CONTAINER_IMAGE=${SANDBOX_RUNTIME_CONTAINER_IMAGE:-docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik}
+      - SANDBOX_USER_ID=${SANDBOX_USER_ID:-1234}
+      - WORKSPACE_MOUNT_PATH=${WORKSPACE_BASE:-$PWD/workspace}
+      #
+      # - DEBUG=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${WORKSPACE_BASE:-$PWD/workspace}:/opt/workspace_base
+      # - ./config.toml:/app/config.toml
+      - filestore-data:/var/file_store
+    pull_policy: build
+
+##
+volumes:
+  filestore-data:
+###

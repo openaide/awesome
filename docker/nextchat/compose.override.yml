@@ -1,0 +1,25 @@
+###
+services:
+  nextchat:
+    environment:
+      - OPENAI_API_KEY=sk-1234
+      - BASE_URL=http://host.docker.internal:4000
+      - NEXT_DEBUG=true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.nextchat.rule=Host(`nextchat.localhost`)
+      - traefik.http.routers.nextchat.entrypoints=web
+      - traefik.http.services.nextchat.loadbalancer.server.port=3000
+      - custom.traefik.group=openaide
+
+##
+networks:
+  openland:
+    external: true
+
+###

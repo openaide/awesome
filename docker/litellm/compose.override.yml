@@ -1,0 +1,31 @@
+###
+services:
+  litellm:
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    command:
+      - "--config=/app/config.yaml"
+    environment:
+      - DATABASE_URL=postgresql://admin:password@postgres:5432/litellm
+      - STORE_MODEL_IN_DB=True
+      #
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LITELLM_SALT_KEY=${LITELLM_SALT_KEY:-sk-1234}
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk-1234}
+    ports:
+      - 4000:4000
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.litellm-router.rule=Host(`litellm.localhost`)
+      - traefik.http.routers.litellm-router.entryPoints=web
+      - traefik.http.services.litellm.loadbalancer.server.port=4000
+      - custom.traefik.group=openaide
+
+networks:
+  openland:
+    external: true
+
+###

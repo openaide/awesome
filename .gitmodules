@@ -1,0 +1,3 @@
+[submodule "perpetis"]
+	path = perpetis
+	url = https://github.com/perpetis/perpetis.git

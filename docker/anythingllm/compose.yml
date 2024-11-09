@@ -1,0 +1,61 @@
+###
+services:
+  anythingllm:
+    build:
+      context: ./local/anything-llm
+      dockerfile: docker/Dockerfile
+    image: openaide/anythingllm
+    cap_add:
+      - SYS_ADMIN
+    environment:
+      # Adjust for your environment
+      - SERVER_PORT=3001
+      - STORAGE_DIR=/app/server/storage
+      - JWT_SECRET="make this a large list of random numbers and letters 20+"      
+      ##
+      # - LLM_PROVIDER=openai
+      # - OPEN_AI_KEY=sk-1234
+      # - OPEN_MODEL_PREF=gpt-4o-mini
+      ##
+      # TODO: ContextWindowExceededError - a bug?
+      # - LLM_PROVIDER=litellm
+      # - LITE_LLM_MODEL_PREF=gpt-4o-mini
+      # - LITE_LLM_MODEL_TOKEN_LIMIT=128000
+      # - LITE_LLM_BASE_PATH=http://host.docker.internal:4000
+      # - LITE_LLM_API_KEY=sk-1234
+      ##
+      # - LLM_PROVIDER=generic-openai
+      - GENERIC_OPEN_AI_BASE_PATH=http://host.docker.internal:4000
+      - GENERIC_OPEN_AI_MODEL_PREF=gpt-4o-mini
+      - GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT=128000
+      - GENERIC_OPEN_AI_API_KEY=sk-1234
+      - GENERIC_OPEN_AI_MAX_TOKENS=16384
+      # - GENERIC_OPEN_AI_EMBEDDING_API_KEY=
+      ##
+      # - LLM_PROVIDER=ollama
+      # - OLLAMA_BASE_PATH=http://127.0.0.1:11434
+      # - OLLAMA_MODEL_PREF=llama2
+      # - OLLAMA_MODEL_TOKEN_LIMIT=4096
+      ##
+      # - EMBEDDING_ENGINE=localai
+      # - EMBEDDING_BASE_PATH=http://localai:8080/v1
+      # - EMBEDDING_MODEL_PREF=text-embedding-ada-002
+      # - EMBEDDING_MODEL_MAX_CHUNK_LENGTH=1000
+      # #
+      # - EMBEDDING_ENGINE=ollama
+      # - EMBEDDING_BASE_PATH=http://ollama:11434
+      # - EMBEDDING_MODEL_PREF=nomic-embed-text:latest
+      # - EMBEDDING_MODEL_MAX_CHUNK_LENGTH=8192
+      #
+      - VECTOR_DB=lancedb
+      - WHISPER_PROVIDER=local
+      - TTS_PROVIDER=native
+      - PASSWORDMINCHAR=8
+      # Add any other keys here for services or settings
+      # you can find in the docker/.env.example file
+      - ENABLE_HTTPS=
+      - DISABLE_VIEW_CHAT_HISTORY=1
+      - DISABLE_TELEMETRY=true
+    restart: always
+###
+    

@@ -1,0 +1,28 @@
+###
+services:
+  aider:
+    # ports:
+    #   - 8002:8501
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # - ${WORKSPACE_BASE:-$PWD/workspace}:/app
+      # credentials
+      - $HOME/.git-credentials:/root/.git-credentials:ro
+      - $HOME/.gitconfig:/root/.gitconfig:ro
+      - $HOME/.npmrc:/root/.npmrc:ro
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.aider-router.rule=Host(`aider.localhost`)
+      - traefik.http.routers.aider-router.entryPoints=web
+      - traefik.http.services.aider.loadbalancer.server.port=8501
+      - custom.traefik.group=openaide
+
+networks:
+  openland:
+    external: true
+
+###

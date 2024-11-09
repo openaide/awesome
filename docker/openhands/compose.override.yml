@@ -1,0 +1,24 @@
+#
+services:
+  openhands:
+    ports:
+      - "8001:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.openhands.rule=Host(`openhands.localhost`)
+      - traefik.http.routers.openhands.entryPoints=web
+      - traefik.http.services.openhands.loadbalancer.server.port=3000
+      # - traefik.http.middlewares.openhands-websocket-headers.headers.customRequestHeaders.X-Forwarded-Proto=https
+      # - traefik.http.middlewares.openhands-websocket-headers.headers.customRequestHeaders.upgrade=websocket
+      # - traefik.http.middlewares.openhands-websocket-headers.headers.customRequestHeaders.connection=Upgrade
+      # - traefik.http.routers.openhands.middlewares=openhands-websocket-headers
+      - custom.traefik.group=openaide
+
+networks:
+  openland:
+    external: true

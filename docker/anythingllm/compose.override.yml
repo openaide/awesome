@@ -1,0 +1,65 @@
+###
+services:
+  anythingllm:
+    # ports:
+    #   - "9001:3001"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - anythingllm_storage:/app/server/storage
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.anythingllm-router.rule=Host(`anythingllm.localhost`)
+      - traefik.http.routers.anythingllm-router.entrypoints=web
+      - traefik.http.services.anythingllm.loadbalancer.server.port=3001
+      - custom.traefik.group=openaide
+
+  # # https://github.com/ollama/ollama/blob/main/docs/docker.md
+  # ollama:
+  #   image: ollama/ollama
+  #   # container_name: ollama
+  #   networks:
+  #     - openland
+  #   # ports:
+  #   #   - "11434:11434"
+  #   volumes:
+  #     - ollama:/root/.ollama
+  #   restart: unless-stopped
+
+  # # https://github.com/mudler/LocalAI?tab=readme-ov-file
+  # localai:
+  #   image: localai/localai:latest-aio-cpu
+  #   platform: linux/amd64
+  #   # container_name: localai
+  #   networks:
+  #     - openland
+  #   # ports:
+  #   #   - "8080:8080"
+  #   restart: unless-stopped
+
+##
+volumes:
+  anythingllm_storage:
+  # ollama:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: local_ollama.bak
+
+  # anythingllm_storage:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: local_llm_storage.bak
+
+##
+networks:
+  openland:
+    external: true
+
+###

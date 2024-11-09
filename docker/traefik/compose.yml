@@ -1,0 +1,49 @@
+###
+name: openaide
+
+services:
+  # https://hub.docker.com/_/traefik
+  # https://docs.traefik.io/routing/providers/docker/
+  traefik:
+    image: traefik
+    networks:
+      - openland
+    ports:
+      - "${WEB_PORT:-80}:80"
+      - "${ADMIN_PORT:-8080}:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - "--accesslog"
+      - "--log.level=DEBUG"
+      - "--api.insecure"
+      - "--api.dashboard"
+      - "--api.debug"
+      - "--providers.docker"
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.docker.network=openland"
+      - "--providers.docker.constraints=Label(`custom.traefik.group`,`openaide`)"
+      - "--entryPoints.web.address=:80"
+    pull_policy: if_not_present
+
+  # #
+  # whoami:
+  #   profiles:
+  #     - test
+  #   image: traefik/whoami
+  #   networks:
+  #     - openland
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.docker.network=openland
+  #     - traefik.http.routers.whoami.rule=Host(`whoami.localhost`)
+  #     - traefik.http.routers.whoami.entryPoints=web
+  #     - traefik.http.services.whoami.loadbalancer.server.port=80
+  #     - custom.traefik.group=openaide
+
+##
+networks:
+  # docker network create openland
+  openland:
+    external: true
+###
