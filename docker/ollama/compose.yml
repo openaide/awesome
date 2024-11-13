@@ -1,0 +1,16 @@
+###
+services:
+  ollama:
+    build:
+      context: ./local/ollama
+      dockerfile: Dockerfile
+      target: runtime-${ARCH:-}
+      # target: runtime-arm64
+      # target: runtime-amd64
+      # target; runtime-rocm
+    image: openaide/ollama
+    container_name: ollama
+    entrypoint: /bin/ollama
+    command: serve
+###
+    

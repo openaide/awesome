@@ -1,0 +1,10 @@
+###
+#https://github.com/open-webui/open-webui/blob/main/docker-compose.yaml
+services:
+  open-webui:
+    build:
+      context: ./local/open-webui
+      args:
+        OLLAMA_BASE_URL: '/ollama'
+      dockerfile: Dockerfile
+    image: openaide/open-webui

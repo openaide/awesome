@@ -33,7 +33,7 @@ services:
       # - GENERIC_OPEN_AI_EMBEDDING_API_KEY=
       ##
       # - LLM_PROVIDER=ollama
-      # - OLLAMA_BASE_PATH=http://127.0.0.1:11434
+      # - OLLAMA_BASE_PATH=http://host.docker.internal:11434
       # - OLLAMA_MODEL_PREF=llama2
       # - OLLAMA_MODEL_TOKEN_LIMIT=4096
       ##

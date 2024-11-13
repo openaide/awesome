@@ -1,0 +1,38 @@
+###
+services:
+  open-webui:
+    volumes:
+      - open-webui:/app/backend/data
+    # ports:
+    #   - ${OPEN_WEBUI_PORT-3000}:8080
+    #
+    # https://docs.openwebui.com/getting-started/advanced-topics/env-configuration
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - WEBUI_SECRET_KEY=
+      - WEBUI_AUTH=False
+      - OPENAI_API_BASE_URL=http://host.docker.internal:4000
+      - OPENAI_API_KEY=sk-1234
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.openwebui-router.rule=Host(`openwebui.localhost`)
+      - traefik.http.routers.openwebui-router.entrypoints=web
+      - traefik.http.services.openwebui.loadbalancer.server.port=8080
+      - custom.traefik.group=openaide
+
+##
+volumes:
+  open-webui:
+
+##
+networks:
+  openland:
+    external: true
+
+###

@@ -4,7 +4,10 @@ services:
     environment:
       - OPENAI_API_KEY=sk-1234
       - BASE_URL=http://host.docker.internal:4000
-      - NEXT_DEBUG=true
+      - CUSTOM_MODELS=+ollama
+      #
+      - DEBUG=*
+      # - NEXT_RUNTIME_LOGGING=debug
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:

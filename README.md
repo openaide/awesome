@@ -101,6 +101,8 @@ The following tools are grouped by their main features. The AI landscape is chan
 
 ### LLM
 
+* [Ollama](https://github.com/ollama/ollama?tab=readme-ov-file)
+
 ### Dependencies
 
 ## How to prompt

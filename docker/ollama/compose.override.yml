@@ -1,0 +1,33 @@
+###
+services:
+  # https://github.com/ollama/ollama/blob/main/docs/docker.md
+  ollama:
+    # image: ollama/ollama
+    ports:
+      - 11434:11434
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_ORIGINS=http://host.docker.internal,http://localhost,http://*.localhost
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.ollama-router.rule=Host(`ollama.localhost`)
+      - traefik.http.routers.ollama-router.entrypoints=web
+      - traefik.http.services.ollama.loadbalancer.server.port=11434
+      - custom.traefik.group=openaide
+
+##
+volumes:
+  ollama:
+
+##
+networks:
+  openland:
+    external: true
+
+###
