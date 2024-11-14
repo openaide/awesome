@@ -98,10 +98,12 @@ The following tools are grouped by their main features. The AI landscape is chan
 ### General
 
 * [NextChat](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
+* [Open WebUI](https://docs.openwebui.com/)
 
 ### LLM
 
 * [Ollama](https://github.com/ollama/ollama?tab=readme-ov-file)
+* [LocalAI](https://github.com/mudler/LocalAI?tab=readme-ov-file)
 
 ### Dependencies
 

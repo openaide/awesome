@@ -1,0 +1,36 @@
+###
+services:
+  localai:
+    #
+    ports:
+      - 11080:8080
+    environment:
+      - MODELS_PATH=/models
+      - DEBUG=true
+    volumes:
+      - localai-models:/models
+      # - ./models:/models:cached
+      # - ./images/:/tmp/generated/images/
+    command:
+      - phi-2
+    restart: unless-stopped
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.localai-router.rule=Host(`localai.localhost`)
+      - traefik.http.routers.localai-router.entrypoints=web
+      - traefik.http.services.localai.loadbalancer.server.port=8080
+      - custom.traefik.group=openaide
+
+##
+volumes:
+  localai-models:
+
+##
+networks:
+  openland:
+    external: true
+
+###

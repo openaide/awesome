@@ -17,17 +17,6 @@ services:
       - traefik.http.services.anythingllm.loadbalancer.server.port=3001
       - custom.traefik.group=openaide
 
-  # # https://github.com/mudler/LocalAI?tab=readme-ov-file
-  # localai:
-  #   image: localai/localai:latest-aio-cpu
-  #   platform: linux/amd64
-  #   # container_name: localai
-  #   networks:
-  #     - openland
-  #   # ports:
-  #   #   - "8080:8080"
-  #   restart: unless-stopped
-
 ##
 volumes:
   anythingllm_storage:

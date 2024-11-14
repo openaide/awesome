@@ -21,7 +21,7 @@ services:
       - ${WORKSPACE_BASE:-$PWD/workspace}:/opt/workspace_base
       # - ./config.toml:/app/config.toml
       - filestore-data:/var/file_store
-    pull_policy: build
+    # pull_policy: build
 
 ##
 volumes:
