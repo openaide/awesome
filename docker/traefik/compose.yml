@@ -1,11 +1,19 @@
 ###
-name: openaide
+name: awesome
 
 services:
   # https://hub.docker.com/_/traefik
   # https://docs.traefik.io/routing/providers/docker/
+  # https://github.com/traefik/traefik.git
   traefik:
-    image: traefik
+    # image: traefik
+    image: openaide/traefik
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        - ARCH=${ARCH:-}
+        - GO_VERSION=${GO_VERSION:-1.23.3}
     networks:
       - openland
     ports:
@@ -26,20 +34,20 @@ services:
       - "--entryPoints.web.address=:80"
     pull_policy: if_not_present
 
-  # #
-  # whoami:
-  #   profiles:
-  #     - test
-  #   image: traefik/whoami
-  #   networks:
-  #     - openland
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.docker.network=openland
-  #     - traefik.http.routers.whoami.rule=Host(`whoami.localhost`)
-  #     - traefik.http.routers.whoami.entryPoints=web
-  #     - traefik.http.services.whoami.loadbalancer.server.port=80
-  #     - custom.traefik.group=openaide
+  #
+  whoami:
+    profiles:
+      - test
+    image: traefik/whoami
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.whoami.rule=Host(`whoami.localhost`)
+      - traefik.http.routers.whoami.entryPoints=web
+      - traefik.http.services.whoami.loadbalancer.server.port=80
+      - custom.traefik.group=openaide
 
 ##
 networks:

@@ -18,6 +18,7 @@ services:
       # - traefik.http.middlewares.openhands-websocket-headers.headers.customRequestHeaders.connection=Upgrade
       # - traefik.http.routers.openhands.middlewares=openhands-websocket-headers
       - custom.traefik.group=openaide
+    restart: unless-stopped
 
 networks:
   openland:

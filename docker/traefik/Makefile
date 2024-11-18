@@ -1,5 +1,5 @@
 #
-# make litellm
+# make traefik
 #
 
 ###
@@ -10,9 +10,11 @@ help: Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ##
-APP_VERSION ?= osi
-APP_REPO_URL ?= https://github.com/qiangli/litellm.git
-TARGET_DIR = local/litellm
+APP_VERSION ?= v3.2.1
+APP_REPO_URL ?= https://github.com/traefik/traefik.git
+TARGET_DIR = local/traefik
+
+export ARCH := $(shell uname -m)
 
 ##
 clone:
@@ -25,13 +27,13 @@ clone:
 	cd $(TARGET_DIR) && git pull origin $(APP_VERSION)
 
 ##
-build: clone ## Build LiteLLM
+build: clone ## Build
 	@docker compose build
 
-up: net ## Start LiteLLM
+up: net ## Start
 	@docker compose up -d
 
-down:  ## Stop LiteLLM
+down:  ## Stop
 	@docker compose down
 
 net: ## Create openland network

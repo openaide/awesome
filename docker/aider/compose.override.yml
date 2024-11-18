@@ -3,10 +3,29 @@ services:
   aider:
     # ports:
     #   - 8002:8501
+    environment:
+      - OPENAI_API_KEY=sk-1234
+      - OPENAI_API_BASE=http://host.docker.internal:4000
+      # - OPENAI_API_BASE=http://localhost:4000
+      - AIDER_MODEL=gpt-4o
+      - AIDER_WEAK_MODEL=gpt-4o-mini
+      #
+      - AIDER_ANALYTICS_DISABLE=true
+      - AIDER_ANALYTICS=false
+      - AIDER_DARK_MODE=true
+      #
+      - AIDER_BROWSER=true
+      - STREAMLIT_GATHER_USAGE_STATS=false
+      - STREAMLIT_NO_PROMPT=true
+      - STREAMLIT_SERVER_PORT=8501
+    # command: >
+    #   python -m aider --gui --model openai/gpt-4o
+    stdin_open: true
+    tty: true
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      # - ${WORKSPACE_BASE:-$PWD/workspace}:/app
+      - ${WORKSPACE_BASE:-$PWD/workspace}:/workspace
       # credentials
       - $HOME/.git-credentials:/root/.git-credentials:ro
       - $HOME/.gitconfig:/root/.gitconfig:ro

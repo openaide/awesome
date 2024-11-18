@@ -17,6 +17,9 @@ Prepare models once ollama is up and running:
 docker exec ollama ollama run llama3.2
 docker exec ollama ollama run llama3.2:1b
 docker exec ollama ollama run starcoder2:3b
+docker exec ollama ollama run codellama:7b-instruct
+docker exec ollama ollama run codellama:7b-code
+docker exec ollama ollama run qwen2.5-coder:7b-base
 ```
 
 * [Example models](https://github.com/ollama/ollama?tab=readme-ov-file)

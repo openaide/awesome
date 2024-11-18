@@ -1,4 +1,6 @@
 ###
+name: awesome
+
 services:
   anythingllm:
     build:

@@ -1,9 +1,11 @@
 ###
+name: awesome
+
 services:
   litellm:
     build:
-      context: ./
-      args:
-        target: runtime
+      context: ./local/litellm
+      dockerfile: Dockerfile
+      target: runtime
     image: openaide/litellm-osi
 

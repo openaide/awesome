@@ -7,18 +7,20 @@
 help: Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+##
+export COMPOSE_PROJECT_NAME = awesome
+# export COMPOSE_REMOVE_ORPHANS = true
+export COMPOSE_IGNORE_ORPHANS = true
+
 ###
-start: litellm-up postgres-up ## Start litellm services
-stop: litellm-down postgres-down ## Stop litellm services
+start: net litellm-up postgres-up traefik-up ## Start litellm traefik services
+stop: litellm-down postgres-down traefik-down ## Stop litellm traefik services
 
-start-core: litellm-up traefik-up redis-up postgres-up ## Start litellm, traefik services
-stop-core: litellm-down traefik-down redis-down postgres-down ## Stop litellm, traefik services
-
-start-all:  start-core start-llm start-tools ## Start all services
-stop-all:  stop-core stop-llm stop-tools ## Stop all services
+start-all: start start-llm start-tools ## Start all services
+stop-all: stop stop-llm stop-tools ## Stop all services
 
 ##
-.PHONY: start stop start-core stop-core start-all stop-all
+.PHONY: start stop start-all stop-all
 
 ###
 traefik-up: ## Start traefik
@@ -35,16 +37,16 @@ litellm-down: ## Stop litellm
 	@cd docker/litellm && docker compose down
 
 ##
-postgres-up: ## Start postgres
+postgres-up:
 	@cd perpetis && docker compose --profile postgres up -d	
 
-postgres-down: ## Stop postgres
+postgres-down:
 	@cd perpetis && docker compose --profile postgres down
 
-redis-up: ## Start redis
+redis-up:
 	@cd perpetis && docker compose --profile redis up -d
 
-redis-down: ## Stop redis
+redis-down:
 	@cd perpetis && docker compose --profile redis down
 
 ##
@@ -54,19 +56,25 @@ redis-down: ## Stop redis
 .PHONY: redis-up redis-down
 
 ### LLM
-ollama-up:
+ollama-up: ## Start ollama
 	@cd docker/ollama && docker compose up -d
 
-ollama-down:
+ollama-down: ## Stop ollama
 	@cd docker/ollama && docker compose down
 
-##
-start-llm: ollama-up ## Start LLM
-stop-llm: ollama-down ## Stop LLM
+localai-up:
+	@cd docker/localai && docker compose up -d
+
+localai-down:
+	@cd docker/localai && docker compose down
 
 ##
-.PHONY: ollama-up
-.PHONY: ollama-down
+start-llm: ollama-up localai-up ## Start all LLM
+stop-llm: ollama-down localai-down ## Stop all LLM
+
+##
+.PHONY: ollama-up localai-up
+.PHONY: ollama-down localai-down
 
 .PHONY: start-llm stop-llm
 
@@ -120,4 +128,10 @@ stop-tools: aider-down anythingllm-down docsgpt-down nextchat-down openhands-dow
 .PHONY: aider-up anythingllm-up docsgpt-up nextchat-up openhands-up openwebui-up
 .PHONY: adier-down anythingllm-down docsgpt-down nextchat-down openhands-down openwebui-down
 .PHONY: start-tools stop-tools
+
+##
+net: ## Create network
+	@docker network inspect openland >/dev/null 2>&1 \
+		|| docker network create openland
+.PHONY: net
 ###

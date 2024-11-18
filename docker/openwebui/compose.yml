@@ -1,4 +1,6 @@
 ###
+name: awesome
+
 #https://github.com/open-webui/open-webui/blob/main/docker-compose.yaml
 services:
   open-webui:

@@ -1,4 +1,6 @@
 ###
+name: awesome
+
 services:
   ollama:
     build:
@@ -9,7 +11,6 @@ services:
       # target: runtime-amd64
       # target; runtime-rocm
     image: openaide/ollama
-    container_name: ollama
     entrypoint: /bin/ollama
     command: serve
 ###
