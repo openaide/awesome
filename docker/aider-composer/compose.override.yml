@@ -1,0 +1,20 @@
+###
+
+# https://aider.chat/docs/llms/openai-compat.html
+services:
+  aider-chat-service:
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.aider-chat-service-router.rule=Host(`aider-chat-service.localhost`)
+      - traefik.http.routers.aider-chat-service-router.entryPoints=web
+      - traefik.http.services.aider-chat-service.loadbalancer.server.port=5000
+      - custom.traefik.group=openaide
+
+networks:
+  openland:
+    external: true
+
+###

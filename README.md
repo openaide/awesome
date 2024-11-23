@@ -4,6 +4,8 @@ This is a collection of open-source AI tools and dependencies that anyone can ru
 
 All tools are available under permissive licenses, including MIT, BSD, Apache, or MPL.
 
+If you want to be on the cutting edge, read on.
+
 ## Requirements
 
 * Get [Docker](https://docs.docker.com/get-started/get-docker/)
@@ -54,11 +56,14 @@ Username: admin
 Password: sk-1234
 ```
 
+### Services
+
 All tools can be built, started, or stopped with `docker compose`. For convenience, make targets are also provided.
 
 ```bash
 cd docker/<app>
 make build
+
 make up
 make down
 ```
@@ -74,15 +79,27 @@ Check traefik dashboard [http://localhost:8080](http://localhost:8080)
 
 Visit the tool's web app: `http://<app>.localhost` where `<app>` is name of the tool.
 
-## Tools
+### VSCode extensions
+
+All VSCode extensions can be built with make and extension is saved in `local/extension/`
+
+```bash
+make vsce
+```
+
+To install the extension: Activity Bar/Extensions/Install from VSIX...
+
+## Tools and extensions
 
 The following tools are grouped by their main features. The AI landscape is changing daily, the information could be inaccurate by the time you get here.
 
 ### VSCode extension - code edit
 
-* [Continue](https://www.continue.dev/)
+* [Continue](https://github.com/continuedev/continue)
 
-* [Cline](https://github.com/cline/cline/wiki)
+* [Cline](https://github.com/cline/cline.git)
+
+* [Aider Composer](https://github.com/lee88688/aider-composer.git)
 
 ### Code generation
 
