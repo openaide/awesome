@@ -19,8 +19,11 @@ stop: litellm-down postgres-down traefik-down ## Stop litellm traefik services
 start-all: start start-llm start-tools ## Start all services
 stop-all: stop stop-llm stop-tools ## Stop all services
 
+start-gw: net gateway-up ## Start gateway
+stop-gw: gateway-down ## Stop gateway
+
 ##
-.PHONY: start stop start-all stop-all
+.PHONY: start stop start-all stop-all start-gw stop-gw
 
 ###
 traefik-up: ## Start traefik
@@ -35,6 +38,15 @@ litellm-up: ## Start litellm
 
 litellm-down: ## Stop litellm
 	@cd docker/litellm && docker compose down
+
+##
+gateway-up:
+	@cd docker/gateway && docker compose up -d
+
+gateway-down:
+	@cd docker/gateway && docker compose down
+
+.PHONY: gateway-up gateway-down
 
 ##
 postgres-up:

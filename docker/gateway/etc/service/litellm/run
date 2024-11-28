@@ -1,0 +1,33 @@
+#!/bin/bash
+set -x
+
+echo "Starting LiteLLM..."
+export DATABASE_URL="postgresql://admin:password@localhost:5432/litellm"
+export STORE_MODEL_IN_DB=True
+#
+export OPENAI_API_KEY=${OPENAI_API_KEY}
+export LITELLM_SALT_KEY=${LITELLM_SALT_KEY:-sk-1234}
+export LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk-1234}
+
+##
+function check_and_initdb() {
+    while true; do
+		pg_isready -q -U postgres -h localhost
+		if [ $? -eq 0 ]; then
+			if [ -x "/opt/bin/initdb.sh" ]; then
+				/opt/bin/initdb.sh
+				echo "initdb.sh executed successfully."
+				return 0
+			else
+				return 1
+			fi
+		else
+			sleep 5
+		fi
+    done
+}
+
+check_and_initdb
+
+exec litellm --port 4000 --config /etc/service/litellm/config.yaml
+###

@@ -1,0 +1,11 @@
+#
+
+services:
+  gw:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: gateway
+      args:
+        - ARCH=${ARCH:-}
+        - GO_VERSION=${GO_VERSION:-1.23.3}

@@ -47,7 +47,7 @@ RUN apt-get update && apt-get install -y \
 	&& apt-get autoremove -y
 
 ARG ARCH
-ARG GO_VERSION
+ARG GO_VERSION=1.23.3
 
 # Install Go
 RUN curl -fsSL -o go${GO_VERSION}.linux-${ARCH}.tar.gz https://go.dev/dl/go${GO_VERSION}.linux-${ARCH}.tar.gz && \

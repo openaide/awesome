@@ -1,0 +1,23 @@
+#!/bin/bash
+echo "Starting Traefik..."
+
+#
+wget http://localhost:4000/
+while [ $? -ne 0 ]; do
+	echo "Waiting for LiteLLM to start..."
+	sleep 5
+	wget http://localhost:4000/
+done
+
+exec /opt/bin/traefik \
+	"--accesslog" \
+	"--log.level=DEBUG" \
+	"--api.insecure" \
+	"--api.dashboard" \
+	"--api.debug" \
+	"--providers.docker" \
+	"--providers.docker.exposedByDefault=false" \
+	"--providers.docker.network=openland" \
+	"--providers.docker.constraints=Label(\`custom.traefik.group\`,\`openaide\`)" \
+	"--entryPoints.web.address=:80"
+###

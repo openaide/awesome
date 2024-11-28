@@ -10,7 +10,8 @@ help: Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ##
-APP_VERSION ?= v3.2.1
+# APP_VERSION ?= v3.2.1
+APP_VERSION ?= master
 APP_REPO_URL ?= https://github.com/traefik/traefik.git
 TARGET_DIR = local/traefik
 
@@ -27,7 +28,7 @@ clone:
 	cd $(TARGET_DIR) && git pull origin $(APP_VERSION)
 
 ##
-build: clone ## Build
+build: clone webui ## Build
 	@docker compose build
 
 up: net ## Start
@@ -40,5 +41,8 @@ net: ## Create openland network
 	@docker network inspect openland >/dev/null 2>&1 \
 		|| docker network create openland
 
-.PHONY: clone build up down net
+webui:
+	@cd local/traefik && make generate-webui
+
+.PHONY: clone build up down net webui-image
 ###
