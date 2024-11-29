@@ -45,6 +45,23 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    bash \
+    curl \
+    dnsutils \
+    file \
+	iproute2 \
+    iputils-ping \
+	jq \
+    lsof \
+	ncat \
+    git \
+    git-lfs \
+    procps \
+    tar \
+    wget
+
 COPY --from=traefik /traefik /opt/bin/
 
 COPY ./entrypoint.sh /entrypoint.sh

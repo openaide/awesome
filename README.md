@@ -78,6 +78,7 @@ make stop-all
 Check traefik dashboard [http://localhost:8080](http://localhost:8080)
 
 Visit the tool's web app: `http://<app>.localhost` where `<app>` is name of the tool.
+Domain Name Reservation Considerations for [localhost](https://www.rfc-editor.org/rfc/rfc6761)
 
 ### VSCode extensions
 

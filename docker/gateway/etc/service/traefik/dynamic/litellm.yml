@@ -1,0 +1,18 @@
+###
+http:
+  routers:
+    litellm-router:
+      rule: "Host(`litellm.localhost`)"
+      entryPoints:
+        - web
+      service: litellm-service
+
+  services:
+    litellm-service:
+      loadBalancer:
+        servers:
+          - url: "http://localhost:4000"
+
+custom:
+  traefik:
+    group: openaide

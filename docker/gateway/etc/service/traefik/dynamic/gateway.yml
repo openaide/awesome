@@ -1,0 +1,18 @@
+###
+http:
+  routers:
+    gateway-router:
+      rule: "Host(`gateway.localhost`) || Host(`gateway`)"
+      entryPoints:
+        - web
+      service: gateway-service
+
+  services:
+    gateway-service:
+      loadBalancer:
+        servers:
+          - url: "http://localhost:8080"
+
+custom:
+  traefik:
+    group: openaide

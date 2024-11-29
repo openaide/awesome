@@ -19,5 +19,8 @@ exec /opt/bin/traefik \
 	"--providers.docker.exposedByDefault=false" \
 	"--providers.docker.network=openland" \
 	"--providers.docker.constraints=Label(\`custom.traefik.group\`,\`openaide\`)" \
-	"--entryPoints.web.address=:80"
+	"--providers.file.directory=/etc/service/traefik/dynamic" \
+	"--providers.file.watch=true" \
+	"--entryPoints.web.address=:80" \
+	"--entrypoints.postgres.address=:25432"
 ###

@@ -1,0 +1,19 @@
+###
+###
+tcp:
+  routers:
+    postgres-router:
+      entryPoints:
+        - postgres
+      rule: "HostSNI(`postgres.localhost`)"
+      service: postgres-service
+
+  services:
+    postgres-service:
+      loadBalancer:
+        servers:
+          - address: "localhost:5432"
+
+custom:
+  traefik:
+    group: openaide
