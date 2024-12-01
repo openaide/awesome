@@ -9,6 +9,7 @@ services:
       - "${WEB_PORT:-80}:80"
       - "${ADMIN_PORT:-8080}:8080"
       - "${LLM_PORT:-4000}:4000"
+      - "${POSTGRES_PORT:-25432}:25432"
     restart: always
     environment:
       #

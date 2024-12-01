@@ -1,0 +1,65 @@
+diff --git a/frontend/nextjs/components/Settings/ChatBox.tsx b/frontend/nextjs/components/Settings/ChatBox.tsx
+index 5870b1df..9d33b5a0 100644
+--- a/frontend/nextjs/components/Settings/ChatBox.tsx
++++ b/frontend/nextjs/components/Settings/ChatBox.tsx
+@@ -24,9 +24,10 @@ export default function ChatBox({ chatBoxSettings, setChatBoxSettings }: ChatBox
+   useEffect(() => {
+     if (typeof window !== 'undefined') {
+       const { protocol, pathname } = window.location;
+-      let { host } = window.location;
+-      host = host.includes('localhost') ? 'localhost:8000' : host;
+-      const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
++      // let { host } = window.location;
++      // host = host.includes('localhost') ? 'localhost:8000' : host;
++      // const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
++      const ws_uri = `ws://gptr-server.localhost/ws`;
+       const newSocket = new WebSocket(ws_uri);
+       setSocket(newSocket);
+ 
+diff --git a/frontend/nextjs/helpers/getHost.ts b/frontend/nextjs/helpers/getHost.ts
+index d1fdf24f..5c7017c0 100644
+--- a/frontend/nextjs/helpers/getHost.ts
++++ b/frontend/nextjs/helpers/getHost.ts
+@@ -3,13 +3,14 @@ interface GetHostParams {
+ }
+ 
+ export const getHost = ({ purpose }: GetHostParams = {}): string => {
+-  if (typeof window !== 'undefined') {
+-    let { host } = window.location;
+-    if (purpose === 'langgraph-gui') {
+-      return host.includes('localhost') ? 'http%3A%2F%2F127.0.0.1%3A8123' : `https://${host}`;
+-    } else {
+-      return host.includes('localhost') ? 'http://localhost:8000' : `https://${host}`;
+-    }
+-  }
+-  return '';
++  // if (typeof window !== 'undefined') {
++  //   let { host } = window.location;
++  //   if (purpose === 'langgraph-gui') {
++  //     return host.includes('localhost') ? 'http%3A%2F%2F127.0.0.1%3A8123' : `https://${host}`;
++  //   } else {
++  //     return host.includes('localhost') ? 'http://localhost:8000' : `https://${host}`;
++  //   }
++  // }
++  // return '';
++  return 'http://gptr-server.localhost/';
+ };
+\ No newline at end of file
+diff --git a/frontend/nextjs/hooks/useWebSocket.ts b/frontend/nextjs/hooks/useWebSocket.ts
+index fc6bc5d6..9ad66f5b 100644
+--- a/frontend/nextjs/hooks/useWebSocket.ts
++++ b/frontend/nextjs/hooks/useWebSocket.ts
+@@ -24,9 +24,10 @@ export const useWebSocket = (setOrderedData: React.Dispatch<React.SetStateAction
+ 
+     if (!socket && typeof window !== 'undefined') {
+       const { protocol, pathname } = window.location;
+-      let { host } = window.location;
+-      host = host.includes('localhost') ? 'localhost:8000' : host;
+-      const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
++      // let { host } = window.location;
++      // host = host.includes('localhost') ? 'localhost:8000' : host;
++      // const ws_uri = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${host}${pathname}ws`;
++      const ws_uri = `ws://gptr-server.localhost/ws`;
+ 
+       const newSocket = new WebSocket(ws_uri);
+       setSocket(newSocket);

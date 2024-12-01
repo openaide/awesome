@@ -5,8 +5,9 @@ tcp:
     postgres-router:
       entryPoints:
         - postgres
-      rule: "HostSNI(`postgres.localhost`)"
+      rule: "HostSNI(`*`)"
       service: postgres-service
+      tls: {}
 
   services:
     postgres-service:

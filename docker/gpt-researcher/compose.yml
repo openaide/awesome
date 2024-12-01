@@ -1,0 +1,24 @@
+###
+name: awesome
+
+services:
+  gptr-server:
+    pull_policy: build
+    image: openaide/gptr-server
+    build: 
+      context: ./local/gpt-researcher
+      dockerfile: Dockerfile
+    # ports:
+    #   - 8000:8000
+
+  gptr-nextjs:
+    pull_policy: build
+    image: openaide/gptr-nextjs
+    # stdin_open: true
+    build:
+      context: ./local/gpt-researcher/frontend/nextjs
+      dockerfile: Dockerfile.dev
+      # dockerfile: Dockerfile
+    # ports:
+    #   - 3000:3000
+
