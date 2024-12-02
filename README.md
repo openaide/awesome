@@ -113,6 +113,7 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [AnythingLLM](https://docs.anythingllm.com/)
 * [DocsGPT](https://docs.docsgpt.cloud/)
 * [GPT Researcher](docker/gpt-researcher/README.md)
+* [Danswer](docker/danswer/README.md)
 
 ### General
 

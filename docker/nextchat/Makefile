@@ -1,7 +1,7 @@
 ###
 
 #
-# make next web
+# make nextchat
 #
 .DEFAULT_GOAL := help
 

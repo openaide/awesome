@@ -1,5 +1,5 @@
 #
-# make anythingllm
+# make ollama
 #
 
 .DEFAULT_GOAL := help

@@ -1,5 +1,5 @@
 #
-# make anythingllm
+# make openwebui
 #
 
 .DEFAULT_GOAL := help

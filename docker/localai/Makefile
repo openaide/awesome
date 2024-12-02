@@ -1,5 +1,5 @@
 #
-# make anythingllm
+# make localai
 #
 
 .DEFAULT_GOAL := help
