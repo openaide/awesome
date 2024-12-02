@@ -15,3 +15,5 @@ make down
 ```
 
 After starting up the services, visit [http://gptr.localhost/](http://gptr.localhost/)
+
+Reports are saved in in `./outputs`. You may change it to a different location in [compose.overrid.yaml](./compose.override.yml)

@@ -1,3 +1,26 @@
 #!/bin/bash
 echo "Starting PostgreSQL..."
-exec su postgres -c "postgres -D /var/lib/postgresql/data"
+ 
+POSTGRES_VERSION=17
+
+function update_pg_hba() {
+    # local file="/etc/postgresql/${POSTGRES_VERSION}/main/pg_hba.conf"
+    local file="/var/lib/postgresql/data/pg_hba.conf"
+    local entry="$1"
+
+    if [[ ! -f "$file" ]]; then
+        echo "not found at $file"
+        return 1
+    fi
+
+    if grep -Fxq "$entry" "$file"; then
+        echo "entry already exists in $file"
+    else
+        echo "$entry" >> "$file"
+        echo "entry added to $file"
+    fi
+}
+
+update_pg_hba "host    all    all    all    trust"
+
+exec su postgres -c "postgres -D /var/lib/postgresql/data -c listen_addresses='*' -c port=5432"
