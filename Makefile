@@ -132,6 +132,12 @@ openwebui-up: ## Start open webui
 openwebui-down: ## Stop open webui
 	@cd docker/openwebui && docker compose down
 
+vanna-up: ## Start vanna
+	@cd docker/vanna && docker compose up -d
+
+vanna-down: ## Stop vanna
+	@cd docker/vanna && docker compose down
+
 ##
 start-tools: aider-up anythingllm-up docsgpt-up nextchat-up openhands-up openwebui-up ## Start tools
 stop-tools: aider-down anythingllm-down docsgpt-down nextchat-down openhands-down openwebui-down ## Stop tools
@@ -140,6 +146,8 @@ stop-tools: aider-down anythingllm-down docsgpt-down nextchat-down openhands-dow
 .PHONY: aider-up anythingllm-up docsgpt-up nextchat-up openhands-up openwebui-up
 .PHONY: adier-down anythingllm-down docsgpt-down nextchat-down openhands-down openwebui-down
 .PHONY: start-tools stop-tools
+
+.PHONY: vanna-up vanna-down
 
 ##
 net: ## Create network

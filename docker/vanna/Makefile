@@ -9,23 +9,16 @@ help: Makefile
 
 ##
 TARGET_DIR = local/vanna
-
 APP_REPO_URL ?= https://github.com/vanna-ai/vanna.git
-VANNA_STREAMLIT = https://github.com/vanna-ai/vanna-streamlit.git
-VANNA_FLASK = https://github.com/vanna-ai/vanna-flask.git
-VANNA_NEXTJS_FLASK = https://github.com/vanna-ai/vanna-nextjs-flask.git
 
 ##
 clone:
 	@if [ ! -d $(TARGET_DIR) ]; then \
 		echo "Cloning repository..."; \
-		git clone --branch main $(APP_REPO_URL) $(TARGET_DIR)/vanna; \
-		git clone --branch main $(VANNA_STREAMLIT) $(TARGET_DIR)/vanna-streamlit; \
-		git clone --branch main $(VANNA_FLASK) $(TARGET_DIR)/vanna-flask; \ 
-		git clone --branch main $(VANNA_NEXTJS_FLASK) $(TARGET_DIR)/vanna-nextjs-flask; \
+		git clone --branch main $(APP_REPO_URL) $(TARGET_DIR); \
 	else \
 		echo "Directory exists."; \
-	fi; \
+	fi;
 
 build: clone ## Build docker images
 	@docker buildx bake

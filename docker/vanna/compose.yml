@@ -1,0 +1,10 @@
+###
+name: awesome
+
+services:
+  vanna:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: app
+    image: openaide/vanna

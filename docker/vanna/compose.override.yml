@@ -1,0 +1,45 @@
+###
+services:
+  vanna:
+    volumes:
+      - store-data:/workspace
+    # ports:
+    #   - "${PORT}:5000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5000
+      #
+      - LLM_API_KEY=${LLM_API_KEY:-sk-1234}
+      - LLM_BASE_URL=http://host.docker.internal:4000
+      - LLM_MODEL=gpt-4o
+      #
+      - POSTGRES_HOST=${POSTGRES_HOST:-host.docker.internal}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DBNAME=${POSTGRES_DBNAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      #
+      - STORE_PATH=/workspace
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.vanna-router.rule=Host(`vanna.localhost`)
+      - traefik.http.routers.vanna-router.entrypoints=web
+      - traefik.http.services.vanna.loadbalancer.server.port=5000
+      - custom.traefik.group=openaide
+
+##
+volumes:
+  store-data:
+
+##
+networks:
+  openland:
+    external: true
+
+###

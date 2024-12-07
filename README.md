@@ -108,11 +108,18 @@ The following tools are grouped by their main features. The AI landscape is chan
 
 * [Aider](https://aider.chat/docs/usage/browser.html)
 
+### SQL
+
+* [Vanna](docker/vanna/README.md)
+
 ### Document
 
 * [AnythingLLM](https://docs.anythingllm.com/)
 * [DocsGPT](https://docs.docsgpt.cloud/)
 * [GPT Researcher](docker/gpt-researcher/README.md)
+
+### Search
+
 * [Danswer](docker/danswer/README.md)
 
 ### General
