@@ -33,5 +33,8 @@ net: ## Create openland network
 	@docker network inspect openland >/dev/null 2>&1 \
 		|| docker network create openland
 
-.PHONY: clone build up down net
+proxy: ## build proxy (go)
+	@build-proxy.sh
+
+.PHONY: clone build up down net proxy
 ##

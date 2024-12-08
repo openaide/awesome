@@ -37,7 +37,8 @@ ENV POSTGRES_DBNAME="postgres"
 ENV POSTGRES_USER=""
 ENV POSTGRES_PASSWORD=""
 
-ENV STORE_PATH="/workspace"
+ENV STORE_PATH="/workspace/store"
+ENV TRAIN_PATH="/workspace/train"
 
 VOLUME [ "/workspace" ]
 

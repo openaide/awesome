@@ -4,6 +4,7 @@ with OpenAI's API using environment variables for configuration.
 """
 
 import os
+import glob
 from openai import OpenAI
 
 from vanna.flask import VannaFlaskApp
@@ -56,8 +57,16 @@ vn.connect_to_postgres(
 #
 vn.train(sql="SELECT version();")
 vn.train(sql="SELECT * FROM pg_catalog.pg_user;")
-vn.train(sql="SELECT * FROM pg_database WHERE datistemplate = false;")
+vn.train(sql="SELECT * FROM pg_database WHERE datistemplate = false AND datallowconn = true;")
 vn.train(sql="SELECT * FROM information_schema.tables;")
+
+# read the sql from TRAIN_PATH and train the model
+train_path = os.getenv("TRAIN_PATH", "/workspace/train")
+sql_files = glob.glob(os.path.join(train_path, '*.sql'))
+for sql_file in sql_files:
+    with open(sql_file, 'r', encoding='utf-8') as file:
+        sql_content = file.read()
+        vn.train(sql=sql_content)
 
 app = VannaFlaskApp(vn)
 host = os.environ.get("HOST", "0.0.0.0")
