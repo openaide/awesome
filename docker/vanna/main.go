@@ -8,15 +8,39 @@ import (
 )
 
 func main() {
-	// Define command-line flags
-	dbHost := flag.String("host", "localhost", "Database host")
-	dbPort := flag.String("port", "5432", "Database port")
-	dbUsername := flag.String("user", "postgres", "Database user")
+	// Set default values using environment variables
+	defaultHost := os.Getenv("POSTGRES_HOST")
+	if defaultHost == "" {
+		defaultHost = "localhost"
+	}
+
+	defaultPort := os.Getenv("POSTGRES_PORT")
+	if defaultPort == "" {
+		defaultPort = "5432"
+	}
+
+	defaultUser := os.Getenv("POSTGRES_USER")
+	if defaultUser == "" {
+		defaultUser = "postgres"
+	}
+
+	defaultDbName := os.Getenv("POSTGRES_DBNAME")
+	if defaultDbName == "" {
+		defaultDbName = "postgres"
+	}
+
+	//
+	dbHost := flag.String("host", defaultHost, "Postgres host")
+	dbPort := flag.String("port", defaultPort, "Postgres port")
+	dbUser := flag.String("user", defaultUser, "Postgres user")
+	dbName := flag.String("dbname", defaultDbName, "Postgres database name")
+
 	dbPassword := flag.String("pass", "", "Database password")
-	dbName := flag.String("dbname", "postgres", "Database name")
+
+	//
 	serverAddress := flag.String("address", ":58080", "Server address")
 
-	// New flags for train and store paths
+	//
 	trainPath := flag.String("train", "", "Path to training data")
 	storePath := flag.String("store", "", "Path to store data")
 
@@ -26,15 +50,6 @@ func main() {
 	// Parse the flags
 	flag.Parse()
 
-	// Set dbUsername from environment if not provided via flags
-	if *dbUsername == "" {
-		*dbUsername = os.Getenv("POSTGRES_USER")
-		if *dbUsername == "" {
-			*dbUsername = "postgres"
-		}
-	}
-
-	// Set dbPassword from environment if not provided via flags
 	if *dbPassword == "" {
 		*dbPassword = os.Getenv("POSTGRES_PASSWORD")
 	}
@@ -70,7 +85,7 @@ func main() {
 			DBInfo: &proxy.DBInfo{
 				Host:     *dbHost,
 				Port:     *dbPort,
-				Username: *dbUsername,
+				Username: *dbUser,
 				Password: *dbPassword,
 				DBName:   *dbName,
 			},

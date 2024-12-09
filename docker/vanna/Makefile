@@ -8,14 +8,18 @@ help: Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ##
-TARGET_DIR = local/vanna
+APP_VERSION ?= main
 APP_REPO_URL ?= https://github.com/vanna-ai/vanna.git
+TARGET_DIR = local/vanna
+
+PATCH=$(PWD)/assets.patch
 
 ##
 clone:
 	@if [ ! -d $(TARGET_DIR) ]; then \
 		echo "Cloning repository..."; \
-		git clone --branch main $(APP_REPO_URL) $(TARGET_DIR); \
+		git clone --branch $(APP_VERSION) $(APP_REPO_URL) $(TARGET_DIR); \
+		cd $(TARGET_DIR) && git checkout $(APP_VERSION) && git apply $(PATCH); \
 	else \
 		echo "Directory exists."; \
 	fi;

@@ -10,13 +10,15 @@ make clone
 ## Install dependencies
 
 ```bash
-python3 -m venv local/venv
-source local/venv/bin/activate
+#
+./build-app.sh
+# python3 -m venv local/venv
+# source local/venv/bin/activate
 
-pip install --upgrade pip
-pip install chromadb openai
+# pip install --upgrade pip
+# pip install chromadb openai
 
-pip install local/vanna/[all]
+# pip install local/vanna/[all]
 
 #
 export HOST="0.0.0.0"
@@ -32,7 +34,11 @@ export POSTGRES_DBNAME="postgres"
 export POSTGRES_USER=
 export POSTGRES_PASSWORD=
 
-export STORE_PATH=./local
+export STORE_BASE=./local/store
+export TRAIN_BASE=./local/train
+
+export LOG_LEVEL=debug
+export FLASK_DEBUG=1
 
 python app.py
 ```

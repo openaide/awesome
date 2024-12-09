@@ -69,7 +69,15 @@ func StartServer(config *WebConfig) error {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/", healthHandler).Methods("GET")
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if config.App.DBInfo.IsValid() {
+			http.Redirect(w, r, "/db", http.StatusFound)
+			return
+		}
+		http.Redirect(w, r, "/login", http.StatusFound)
+	}).Methods("GET")
+
+	r.HandleFunc("/health", healthHandler).Methods("GET")
 	r.HandleFunc("/login", loginPage.Handler()).Methods("GET", "POST")
 	r.HandleFunc("/db", dbPage.Handler()).Methods("GET")
 	r.HandleFunc("/db/{dbname}", proxyPage.Handler()).Methods("GET")
