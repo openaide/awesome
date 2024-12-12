@@ -75,7 +75,7 @@ func (p *ProxyServer) stop() {
 }
 
 func (p *ProxyServer) spawn() {
-	log.Printf("##### Proxy spawn port: %v user: %s", p.port, p.user)
+	log.Printf("Proxy port: %v user: %s", p.port, p.user)
 
 	getEnv := func(key, defVal string) string {
 		if v, exist := os.LookupEnv(key); exist {
@@ -112,17 +112,20 @@ func (p *ProxyServer) spawn() {
 		fmt.Sprintf("TRAIN_PATH=%v", filepath.Join(trainBase, p.dbname)),
 	}
 
+	python := filepath.Join(p.app.VenvPath, "bin/python")
+	args := []string{p.app.AppScript, "serve"}
+
 	err := Retry(func() error {
 		//localhost 127.0.0.1 0.0.0.0
-		e := p.runScript(p.app.AppScript, envVars...)
-		log.Printf("##### Proxy spawn app: %v user: %v  %v", p.app, p.user, e)
+		e := p.runScript(python, args, envVars)
+		log.Printf("Proxy %v user: %v  %v", p.app, p.user, e)
 		return e
 	})
 
 	//
 	p.stop()
 
-	log.Printf("##### Proxy spawn started: %v failed or exited. user: %v error: %v", p.started, p.user, err)
+	log.Printf("Proxy %v failed or exited. user: %v error: %v", p.started, p.user, err)
 }
 
 func (p *ProxyServer) check() {
@@ -135,11 +138,11 @@ func (p *ProxyServer) check() {
 			p.setReady(b)
 		}
 
-		log.Printf("##### Proxy start isServerReady %v port: %v ready: %v error: %v", p.user, p.port, b, e)
+		log.Printf("Proxy isServerReady %v port: %v ready: %v error: %v", p.user, p.port, b, e)
 		return e
 	}, NewBackOff(12, 1*time.Second))
 
-	log.Printf("##### Proxy start started: %v %v port: %v  error: %v", p.started, p.user, p.port, err)
+	log.Printf("Proxy started: %v %v port: %v  error: %v", p.started, p.user, p.port, err)
 }
 
 func NewProxyServer(app *AppConfig, port int, user, dbname string) *ProxyServer {
@@ -181,7 +184,7 @@ func (p *ProxyPage) Handler() http.HandlerFunc {
 func (p *ProxyPage) Proxy() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("ProxyPage.Proxy: %s\n", r.URL.Path)
+		log.Printf("Proxy  %s\n", r.URL.Path)
 
 		//
 		if p.app.DBInfo == nil || !p.app.DBInfo.IsValid() {
@@ -203,7 +206,7 @@ func (p *ProxyPage) Proxy() http.HandlerFunc {
 
 			server, ok := p.servers[prefix]
 			if ok {
-				log.Printf("ProxyPage.Proxy proxy already exists. proxy: %s port: %v\n", prefix, server.port)
+				log.Printf("Proxy  already exists. proxy: %s port: %v\n", prefix, server.port)
 				return server, true
 			}
 
@@ -217,7 +220,7 @@ func (p *ProxyPage) Proxy() http.HandlerFunc {
 			server.start()
 			p.servers[prefix] = server
 
-			log.Printf("ProxyPage.Proxy proxy created. prefix: %s port: %v\n", prefix, port)
+			log.Printf("Proxy  created. prefix: %s port: %v\n", prefix, port)
 			return server, false
 		}
 
@@ -240,7 +243,7 @@ func (p *ProxyPage) Proxy() http.HandlerFunc {
 		r.URL.Path = subpath
 
 		ws := isWebSocketRequest(r)
-		log.Printf("ProxyPage.Proxy: %s ws: %v subpath: %s\n", r.URL.Path, ws, subpath)
+		log.Printf("Proxy  %s ws: %v subpath: %s\n", r.URL.Path, ws, subpath)
 		if ws {
 			wsProxy := websocketproxy.NewProxy(&url.URL{
 				Scheme: "ws",
@@ -249,13 +252,13 @@ func (p *ProxyPage) Proxy() http.HandlerFunc {
 			})
 
 			wsProxy.ServeHTTP(w, r)
-			log.Printf("@@@ ##### ProxyPage.Proxy ws proxy: %s started: %v", r.URL, server.started)
+			log.Printf("Proxy  ws proxy: %s started: %v", r.URL, server.started)
 			return
 		}
 
 		server.proxy.ServeHTTP(w, r)
 
-		log.Printf("@@@ ##### ProxyPage.Proxy http proxy: %s started: %v", r.URL, server.started)
+		log.Printf("Proxy  http proxy: %s started: %v", r.URL, server.started)
 	}
 }
 
@@ -275,24 +278,23 @@ func isServerReady(uri string) (bool, error) {
 	res, err := proxyClient.Get(uri)
 
 	if err != nil {
-		log.Printf("##### Proxy isServerReady: %v", err)
+		log.Printf("Proxy isServerReady: %v", err)
 		return false, err
 	}
 	defer res.Body.Close()
 
-	log.Printf("##### Proxy isServerReady: %v", res)
+	log.Printf("Proxy isServerReady: %v", res)
 
 	return (res.StatusCode == 200), nil
 }
 
-func (p *ProxyServer) runScript(script string, env ...string) error {
-	python := filepath.Join(p.app.VenvPath, "bin/python")
-	cmd := exec.Command(python, script)
+func (p *ProxyServer) runScript(bin string, args []string, env []string) error {
+	cmd := exec.Command(bin, args...)
 	cmd.Env = append(os.Environ(), env...)
 
 	outPipe, err := cmd.StdoutPipe()
 	if err != nil {
-		log.Printf("##### Proxy runScript StdoutPipe %v", err)
+		log.Printf("### Proxy runScript StdoutPipe %v", err)
 		return err
 	}
 	stdout := bufio.NewScanner(outPipe)
@@ -304,27 +306,27 @@ func (p *ProxyServer) runScript(script string, env ...string) error {
 
 	errPipe, err := cmd.StderrPipe()
 	if err != nil {
-		log.Printf("##### Proxy runScript StderrPipe %v", err)
+		log.Printf("### Proxy runScript StderrPipe %v", err)
 		return err
 	}
 	stderr := bufio.NewScanner(errPipe)
 	go func() {
 		for stderr.Scan() {
-			fmt.Printf("STDERR OUT> %s\n", stderr.Text())
+			fmt.Printf("STDERR> %s\n", stderr.Text())
 		}
 	}()
 
 	err = cmd.Start()
 	if err != nil {
-		log.Printf("##### Proxy runScript Start %v", err)
+		log.Printf("### Proxy runScript Start %v", err)
 		return err
 	}
 
 	err = cmd.Wait()
 	if err != nil {
-		log.Printf("##### Proxy runScript Wait %v", err)
+		log.Printf("### Proxy runScript Wait %v", err)
 	}
 
-	log.Printf("##### Proxy runScript exited due to error or inactivity, user: %s", p.user)
+	log.Printf("### Proxy runScript exited due to error or inactivity, user: %s", p.user)
 	return nil
 }

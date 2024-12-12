@@ -17,8 +17,7 @@ make clone
 
 # pip install --upgrade pip
 # pip install chromadb openai
-
-# pip install local/vanna/[all]
+# pip install -e local/vanna/[all]
 
 #
 export HOST="0.0.0.0"

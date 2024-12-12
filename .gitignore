@@ -2,6 +2,7 @@
 # ignore all "local" files
 local
 .env
+.venv
 
 #
 /github

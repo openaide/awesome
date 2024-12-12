@@ -30,7 +30,7 @@ const dbNamesTemplate = `
 		</tr>
 		{{ range $index, $name := .Data.Names }}
 		<tr>
-			<td><a href="/db/{{ $name }}">{{ $name }}</a></td>
+			<td><a href="/db/{{ $name }}" target="_blank">{{ $name }}</a></td>
 		</tr>
 		{{ end }}
 	</table>
