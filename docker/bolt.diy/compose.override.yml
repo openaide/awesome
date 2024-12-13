@@ -1,0 +1,23 @@
+###
+
+services:
+  bolt-ai:
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.bolt-ai-router.rule=Host(`bolt-ai.localhost`)
+      - traefik.http.routers.bolt-ai-router.entrypoints=web
+      - traefik.http.services.bolt-ai.loadbalancer.server.port=5173
+      - custom.traefik.group=openaide
+
+##
+networks:
+  openland:
+    external: true
+
+###

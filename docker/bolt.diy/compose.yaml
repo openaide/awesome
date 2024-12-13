@@ -1,0 +1,45 @@
+###
+name: awesome
+
+services:
+  bolt-ai:
+    image: openaide/bolt-ai
+    # build:
+    #   context: ./local/bolt.diy
+    #   dockerfile: Dockerfile
+    #   target: bolt-ai-development
+    # ports:
+    #   - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      # - VITE_HMR_PROTOCOL=ws
+      - VITE_HMR_HOST=localhost
+      - VITE_HMR_PORT=5173
+      # - CHOKIDAR_USEPOLLING=true
+      # - WATCHPACK_POLLING=true
+      - PORT=5173
+      # - GROQ_API_KEY=${GROQ_API_KEY}
+      # - HuggingFace_API_KEY=${HuggingFace_API_KEY}
+      # - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      # - OPEN_ROUTER_API_KEY=${OPEN_ROUTER_API_KEY}
+      # - GOOGLE_GENERATIVE_AI_API_KEY=${GOOGLE_GENERATIVE_AI_API_KEY}
+      # - OLLAMA_API_BASE_URL=${OLLAMA_API_BASE_URL}
+      # - TOGETHER_API_KEY=${TOGETHER_API_KEY}
+      # - TOGETHER_API_BASE_URL=${TOGETHER_API_BASE_URL}
+      - VITE_LOG_LEVEL=${VITE_LOG_LEVEL:-debug}
+      - DEFAULT_NUM_CTX=${DEFAULT_NUM_CTX:-32768}
+      - RUNNING_IN_DOCKER=true
+      - OPENAI_LIKE_API_KEY=sk-1234
+      - OPENAI_LIKE_API_BASE_URL=http://host.docker.internal:4000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # volumes:
+    #   - type: bind
+    #     source: ./local/bolt.diy
+    #     target: /app
+    #     consistency: cached
+    #   - /app/node_modules
+    ports:
+      - "5173:5173"
+    command: pnpm run dev --host 0.0.0.0
