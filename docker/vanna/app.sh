@@ -20,7 +20,7 @@ export STORE_BASE=${STORE_BASE:-"./local/store"}
 export TRAIN_BASE=${TRAIN_BASE:-"./local/train"}
 
 #
-export PATH=./local/venv/bin:$PATH
+export PATH=./.venv/bin:$PATH
 
 # 
 export TOKENIZERS_PARALLELISM=false

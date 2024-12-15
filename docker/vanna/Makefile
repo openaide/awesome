@@ -24,6 +24,15 @@ clone:
 		echo "Directory exists."; \
 	fi;
 
+# debug
+setup:
+	@cp .vscode/launch.example.json .vscode/launch.json && \
+	touch .env && \
+	echo "Please update .env file with database credentials"
+
+.PHONY: clone setup
+
+##
 build: clone ## Build docker images
 	@docker buildx bake
 
@@ -40,5 +49,8 @@ net: ## Create openland network
 proxy: ## build proxy (go)
 	@build-proxy.sh
 
-.PHONY: clone build up down net proxy
+app: ## install & build app (python)
+	@build-app.sh
+
+.PHONY: build up down net proxy app
 ##

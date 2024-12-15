@@ -7,5 +7,7 @@ local
 #
 /github
 
-.vscode
+**/.vscode/
+!**/.vscode/launch.example.json
+
 ###

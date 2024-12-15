@@ -97,16 +97,14 @@ The following tools are grouped by their main features. The AI landscape is chan
 ### VSCode extension - code edit
 
 * [Continue](https://github.com/continuedev/continue)
-
 * [Cline](https://github.com/cline/cline.git)
-
 * [Aider Composer](https://github.com/lee88688/aider-composer.git)
 
 ### Code generation
 
 * [OpenHands](https://docs.all-hands.dev/)
-
 * [Aider](https://aider.chat/docs/usage/browser.html)
+* [screenshot-to-code](docker/screenshot-to-code/REAMDE.md)
 
 ### SQL
 

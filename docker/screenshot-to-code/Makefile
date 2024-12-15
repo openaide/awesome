@@ -33,7 +33,15 @@ checkout:
 patch:
 	@cd $(TARGET_DIR) && git reset --hard && git apply $(PATCH)
 
-.PHONY: clone checkout patch
+# setup debug
+setup:
+	@mkdir -p $(TARGET_DIR)/backend/.vscode && \
+	cp .vscode/launch.example.json $(TARGET_DIR)/backend/.vscode/launch.json && \
+	mkdir -p $(TARGET_DIR)/frontend/.vscode && \
+	cp .vscode/launch.example.json $(TARGET_DIR)/frontend/.vscode/launch.json
+
+
+.PHONY: clone checkout patch setup
 
 ##
 build: clone checkout patch ## Build

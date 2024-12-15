@@ -12,12 +12,6 @@ make clone
 ```bash
 #
 ./build-app.sh
-# python3 -m venv local/venv
-# source local/venv/bin/activate
-
-# pip install --upgrade pip
-# pip install chromadb openai
-# pip install -e local/vanna/[all]
 
 #
 export HOST="0.0.0.0"
@@ -40,4 +34,12 @@ export LOG_LEVEL=debug
 export FLASK_DEBUG=1
 
 python app.py
+```
+
+.env
+
+```text
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+TRAIN_BASE=
 ```

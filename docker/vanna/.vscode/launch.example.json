@@ -1,0 +1,44 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Vanna:train",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/app.py",
+			"console": "integratedTerminal",
+			"args": [
+				"train"
+				// "${command:pickArgs}"
+			],
+			"env": {
+				"POSTGRES_DBNAME": "postgres",
+				"STORE_PATH": "${workspaceFolder}/local/store/posgres",
+				"TRAIN_PATH": "${env:TRAIN_BASE}/postgres"
+			},
+			"envFile": "${workspaceFolder}/.env",
+			"justMyCode": false
+		},
+		{
+			"name": "Vanna:serve",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/app.py",
+			"console": "integratedTerminal",
+			"args": [
+				"serve",
+				"--port", "5000"
+			],
+			"envFile": "${workspaceFolder}/.env",
+			"env": {
+				"POSTGRES_DBNAME": "postgres",
+				"STORE_PATH": "${workspaceFolder}/local/store/postgres",
+				"TRAIN_PATH": "${env:TRAIN_BASE}/postgres"
+			},
+			"justMyCode": false
+		}
+	]
+}

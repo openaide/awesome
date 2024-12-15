@@ -4,9 +4,10 @@ set -e
 
 # create venv and install the app dependencies
 
-python3 -m venv local/venv
+python3.12 -m venv .venv
+
 # shellcheck disable=SC1091
-source ./local/venv/bin/activate
+source .venv/bin/activate
 
 pip install --upgrade pip
 pip install chromadb openai
