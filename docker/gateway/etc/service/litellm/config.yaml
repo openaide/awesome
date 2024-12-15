@@ -23,6 +23,36 @@ model_list:
       api_key: os.environ/OPENAI_API_KEY
       rpm: 10
 
+  - model_name: gpt-4-vision-preview
+    litellm_params:
+      model: openai/gpt-4-vision-preview
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
+  - model_name: gpt-4-turbo-2024-04-09
+    litellm_params:
+      model: openai/gpt-4-turbo-2024-04-09
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
+  - model_name: gpt-4o-2024-05-13
+    litellm_params:
+      model: openai/gpt-4o-2024-05-13
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
+  - model_name: gpt-4o-2024-08-06
+    litellm_params:
+      model: openai/gpt-4o-2024-08-06
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
+  - model_name: gpt-4o-2024-11-20
+    litellm_params:
+      model: openai/gpt-4o-2024-11-20
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
 # litellm_settings: # module level litellm settings - https://github.com/BerriAI/litellm/blob/main/litellm/__init__.py
 #   drop_params: True
 #   success_callback: ["langfuse"] # OPTIONAL - if you want to start sending LLM Logs to Langfuse. Make sure to set `LANGFUSE_PUBLIC_KEY` and `LANGFUSE_SECRET_KEY` in your env

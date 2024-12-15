@@ -16,6 +16,9 @@ export ARCH := $(shell uname -m)
 build: ## Build gateway
 	@docker buildx bake --progress=plain --file ./compose.override.yml gw
 
+rebuild: ## Rebuild gateway
+	@docker buildx bake --progress=plain --file ./compose.override.yml --no-cache gw
+
 up: net ## Start gateway
 	@docker compose up -d
 
@@ -26,5 +29,5 @@ net: ## Create openland network
 	@docker network inspect openland >/dev/null 2>&1 \
 		|| docker network create openland
 
-.PHONY: build up down net
+.PHONY: build rebuild up down net
 ###

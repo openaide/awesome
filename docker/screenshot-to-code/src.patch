@@ -1,0 +1,20 @@
+diff --git a/frontend/tailwind.config.js b/frontend/tailwind.config.js
+index 2082387..ab6eb49 100644
+--- a/frontend/tailwind.config.js
++++ b/frontend/tailwind.config.js
+@@ -1,5 +1,7 @@
+ /** @type {import('tailwindcss').Config} */
+-module.exports = {
++import tailwindcssAnimate from "tailwindcss-animate";
++
++export default {
+   darkMode: ["class"],
+   content: [
+     "./pages/**/*.{ts,tsx}",
+@@ -74,5 +76,5 @@ module.exports = {
+       },
+     },
+   },
+-  plugins: [require("tailwindcss-animate")],
++  plugins: [tailwindcssAnimate],
+ };

@@ -1,0 +1,34 @@
+###
+
+services:
+  screenshot-to-code-backend:
+    image: openaide/screenshot-to-code-backend
+    build: 
+      context: ./local/screenshot-to-code/backend
+      dockerfile: Dockerfile
+    # env_file:
+    #   - .env
+    # or 
+    environment:
+      # if you change the port, make sure to also change the
+      # VITE_WS_BACKEND_URL at frontend/.env.local
+    # - BACKEND_PORT=7001
+    - OPENAI_API_KEY=sk-1234
+    - OPENAI_BASE_URL=http://host.docker.internal:4000
+    # ports:
+    #   - "7001:7001"
+    command: poetry run uvicorn main:app --host 0.0.0.0 --port 7001
+  
+  screenshot-to-code:
+    image: openaide/screenshot-to-code-frontend
+    build:
+      context: ./local/screenshot-to-code/frontend
+      dockerfile: Dockerfile
+    environment:
+      # - VITE_WS_BACKEND_URL=ws://localhost:7001
+      - VITE_WS_BACKEND_URL=ws://screenshot-to-code-backend.localhost
+      - VITE_HTTP_BACKEND_URL=http://screenshot-to-code-backend.localhost
+    # ports:
+    #   - "5173:5173"
+    depends_on:
+      - screenshot-to-code-backend

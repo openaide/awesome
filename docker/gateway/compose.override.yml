@@ -2,6 +2,7 @@
 
 services:
   gw:
+    image: openaide/gateway
     build:
       context: ./
       dockerfile: Dockerfile
