@@ -23,19 +23,21 @@ clone:
 		git clone --branch $(APP_VERSION) $(APP_REPO_URL) $(TARGET_DIR); \
 	else \
 		echo "Directory exists."; \
-	fi; \
-	cd $(TARGET_DIR) && git pull origin $(APP_VERSION)
+	fi;
 
-checkout: clone
-	@cd $(TARGET_DIR) && git checkout $(APP_VERSION)
+checkout:
+	@cd $(TARGET_DIR) && \
+	git checkout $(APP_VERSION) && \
+	git stash && \
+	git pull origin $(APP_VERSION)
 
-patch: checkout
+patch:
 	@cd $(TARGET_DIR) && git reset --hard && git apply $(PATCH)
 
 .PHONY: clone checkout patch
 
 ##
-build: patch ## Build
+build: clone checkout patch ## Build
 	@docker build ./local/bolt.diy --target bolt-ai-development
 
 rebuild:

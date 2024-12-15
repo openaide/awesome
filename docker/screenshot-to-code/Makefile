@@ -23,12 +23,12 @@ clone:
 		git clone --branch $(APP_VERSION) $(APP_REPO_URL) $(TARGET_DIR); \
 	else \
 		echo "Directory exists."; \
-	fi; \
+	fi;
 
 checkout:
 	@cd $(TARGET_DIR) && \
-		git checkout $(APP_VERSION) && \
-		git pull origin $(APP_VERSION)
+	git checkout $(APP_VERSION) && \
+	git pull origin $(APP_VERSION)
 
 patch:
 	@cd $(TARGET_DIR) && git reset --hard && git apply $(PATCH)

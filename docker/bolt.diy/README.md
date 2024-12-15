@@ -1,5 +1,7 @@
 # bolt.diy
 
+[Bolt.diy (Previously oTToDev)](https://github.com/stackblitz-labs/bolt.diy)
+
 ```text
 Settings/providers/OpenAILike
 

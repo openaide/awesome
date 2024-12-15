@@ -105,6 +105,7 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [OpenHands](https://docs.all-hands.dev/)
 * [Aider](https://aider.chat/docs/usage/browser.html)
 * [screenshot-to-code](docker/screenshot-to-code/REAMDE.md)
+* [Bolt.diy](docker/bolt.diy/README.md)
 
 ### SQL
 
