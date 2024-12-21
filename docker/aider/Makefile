@@ -47,4 +47,9 @@ net: ## Create openland network
 		|| docker network create openland
 
 .PHONY: build up down net
+
+#
+app: ## setup aider (python)
+	@build-app.sh
+.PHONY: app
 ###

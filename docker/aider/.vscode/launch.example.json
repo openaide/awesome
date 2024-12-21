@@ -1,0 +1,68 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Aider",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "aider",
+			"console": "integratedTerminal",
+			"args": [
+				"--dark-mode"
+			],
+			"cwd": "${workspaceFolder}/workspace",
+			"env": {
+				"OPENAI_API_KEY": "sk-1234",
+				// "OPENAI_API_BASE": "http://host.docker.internal:4000",
+				"OPENAI_API_BASE": "http://localhost:4000",
+				"AIDER_MODEL": "gpt-4o",
+				"AIDER_WEAK_MODEL": "gpt-4o-mini",
+				"AIDER_ANALYTICS_DISABLE": "true",
+				"AIDER_ANALYTICS": "false",
+				"AIDER_DARK_MODE": "true",
+				"AIDER_BROWSER": "true",
+				"STREAMLIT_GATHER_USAGE_STATS": "false",
+				"STREAMLIT_NO_PROMPT": "true",
+				"STREAMLIT_SERVER_PORT": "8501",
+				"STREAMLIT_SERVER_ADDRESS": "0.0.0.0",
+				"AIDER_PRETTY": "false",
+				"AIDER_VERBOSE": "true"
+			},
+			"justMyCode": false
+		},
+		{
+			"name": "Aider: GUI",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "aider",
+			"console": "integratedTerminal",
+			"args": [
+				"--gui",
+				"--dark-mode"
+			],
+			"cwd": "${workspaceFolder}/workspace",
+			"env": {
+				"OPENAI_API_KEY": "sk-1234",
+				// "OPENAI_API_BASE": "http://host.docker.internal:4000",
+				"OPENAI_API_BASE": "http://localhost:4000",
+				"AIDER_MODEL": "gpt-4o",
+				"AIDER_WEAK_MODEL": "gpt-4o-mini",
+				"AIDER_ANALYTICS_DISABLE": "true",
+				"AIDER_ANALYTICS": "false",
+				"AIDER_DARK_MODE": "true",
+				"AIDER_BROWSER": "true",
+				"STREAMLIT_GATHER_USAGE_STATS": "false",
+				"STREAMLIT_NO_PROMPT": "true",
+				"STREAMLIT_SERVER_PORT": "8501",
+				"STREAMLIT_SERVER_ADDRESS": "0.0.0.0",
+				"AIDER_PRETTY": "false",
+				"AIDER_VERBOSE": "true"
+			},
+			"justMyCode": false,
+			"stopOnEntry": true
+		}
+	]
+}

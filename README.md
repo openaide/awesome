@@ -18,6 +18,7 @@ If you want to be on the cutting edge, read on.
 
 ```bash
 git clone https://github.com/openaide/awesome.git
+git submodule update --init --recursive
 ```
 
 Start LLM gateway [LiteLLM](https://github.com/BerriAI/litellm).

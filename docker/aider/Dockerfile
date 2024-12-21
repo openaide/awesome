@@ -10,10 +10,7 @@ FROM ${AIDER_BASE_IMAGE} AS aider-gui
 COPY ./local/aider /aider
 
 WORKDIR /aider
-RUN python -m pip install -e .
-
-ENV PIP_NO_INPUT=1
-RUN python -m pip install --upgrade --upgrade-strategy only-if-needed 'aider-chat[browser]'
+RUN python -m pip install -e /aider[help,browser,playwright]
 
 WORKDIR /workspace
 ENTRYPOINT []

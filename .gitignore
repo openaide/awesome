@@ -1,13 +1,14 @@
 ###
 # ignore all "local" files
-local
+local/
 .env
 .venv
 
 #
-/github
 
-**/.vscode/
+**/.vscode/**
 !**/.vscode/launch.example.json
 
+##
+.aider*
 ###
