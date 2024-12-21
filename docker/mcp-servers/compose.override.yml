@@ -1,0 +1,37 @@
+###
+
+services:
+  screenshot-to-code-backend:
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.screenshot-to-code-backend-router.rule=Host(`screenshot-to-code-backend.localhost`)
+      - traefik.http.routers.screenshot-to-code-backend-router.entrypoints=web
+      - traefik.http.services.screenshot-to-code-backend.loadbalancer.server.port=7001
+      - custom.traefik.group=openaide
+  
+  screenshot-to-code:
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    networks:
+      - openland
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=openland
+      - traefik.http.routers.screenshot-to-code-router.rule=Host(`screenshot-to-code.localhost`)
+      - traefik.http.routers.screenshot-to-code-router.entrypoints=web
+      - traefik.http.services.screenshot-to-code.loadbalancer.server.port=5173
+      - custom.traefik.group=openaide
+
+##
+networks:
+  openland:
+    external: true
+
+###

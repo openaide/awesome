@@ -103,7 +103,7 @@ The following tools are grouped by their main features. The AI landscape is chan
 ### Code generation
 
 * [OpenHands](https://docs.all-hands.dev/)
-* [Aider](https://aider.chat/docs/usage/browser.html)
+* [Aider](docker/aider/READEME.md)
 * [screenshot-to-code](docker/screenshot-to-code/REAMDE.md)
 * [Bolt.diy](docker/bolt.diy/README.md)
 
@@ -131,6 +131,10 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [Ollama](https://github.com/ollama/ollama?tab=readme-ov-file)
 * [LocalAI](https://github.com/mudler/LocalAI?tab=readme-ov-file)
 
+### Misc
+
+* [MarkItDown](https://github.com/microsoft/markitdown)
+
 ### Dependencies
 
 ## How to prompt
@@ -140,3 +144,7 @@ Although written for a specific tool, they could apply to all in general.
 * ChatGPT [prompt engineering](https://platform.openai.com/docs/guides/prompt-engineering)
 * OpenHands [prompting best practices](https://docs.all-hands.dev/modules/usage/prompting-best-practices)
 * Aider [usage tips](https://aider.chat/docs/usage/tips.html)
+
+## Benchmark
+
+[SWE-bench Leaderboard](https://www.swebench.com/)

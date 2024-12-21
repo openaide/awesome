@@ -1,5 +1,5 @@
 #
-# make aider
+# make mcp-servers
 #
 
 ###
@@ -11,8 +11,10 @@ help: Makefile
 
 ##
 APP_VERSION ?= main
-APP_REPO_URL ?= https://github.com/Aider-AI/aider.git
-TARGET_DIR = local/aider
+APP_REPO_URL ?= https://github.com/modelcontextprotocol/servers.git
+TARGET_DIR = local/servers
+
+# PATCH=$(PWD)/src.patch
 
 ##
 clone:
@@ -26,25 +28,36 @@ clone:
 checkout:
 	@cd $(TARGET_DIR) && \
 	git checkout $(APP_VERSION) && \
-	git stash && \
 	git pull origin $(APP_VERSION)
+
+# patch:
+# 	@cd $(TARGET_DIR) && git reset --hard && git apply $(PATCH)
+
+# # setup debug
+# setup:
+# 	@mkdir -p $(TARGET_DIR)/backend/.vscode && \
+# 	cp .vscode/launch.example.json $(TARGET_DIR)/backend/.vscode/launch.json && \
+# 	mkdir -p $(TARGET_DIR)/frontend/.vscode && \
+# 	cp .vscode/launch.example.json $(TARGET_DIR)/frontend/.vscode/launch.json
 
 .PHONY: clone checkout
 
 ##
-build: clone checkout ## Build aider
-	@docker compose --profile base build aider-base
+build: clone checkout ## Build
 	@docker compose build
 
-up: net ## Start aider
+rebuild:
+	@docker compose build --no-cache
+
+up: net ## Start
 	@docker compose up -d
 
-down:  ## Stop aider
+down: ## Stop
 	@docker compose down
 
 net: ## Create openland network
 	@docker network inspect openland >/dev/null 2>&1 \
 		|| docker network create openland
 
-.PHONY: build up down net
+.PHONY: build rebuild up down net
 ###
