@@ -13,17 +13,17 @@ export COMPOSE_PROJECT_NAME = awesome
 export COMPOSE_IGNORE_ORPHANS = true
 
 ###
-start: net litellm-up postgres-up traefik-up ## Start litellm traefik services
-stop: litellm-down postgres-down traefik-down ## Stop litellm traefik services
+start: net gateway-up ## Start gateway (one litellm/traefik proxy)
+stop: gateway-down ## Stop gateway (one litellm/traefik proxy)
 
-start-all: start start-llm start-tools ## Start all services
-stop-all: stop stop-llm stop-tools ## Stop all services
+start-all: start-gw start-llm start-tools ## Start all services
+stop-all: stop-gw stop-llm stop-tools ## Stop all services
 
-start-gw: net gateway-up ## Start gateway
-stop-gw: gateway-down ## Stop gateway
+start-proxy: net litellm-up postgres-up traefik-up ## Start litellm and traefik proxy services
+stop-proxy: litellm-down postgres-down traefik-down ## Stop litellm and traefik proxy services
 
 ##
-.PHONY: start stop start-all stop-all start-gw stop-gw
+.PHONY: start stop start-all stop-all start-proxy stop-proxy
 
 ###
 traefik-up: ## Start traefik

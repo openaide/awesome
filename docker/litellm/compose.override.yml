@@ -13,7 +13,7 @@ services:
       - LITELLM_SALT_KEY=${LITELLM_SALT_KEY:-sk-1234}
       - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk-1234}
     ports:
-      - 4000:4000
+      - ${LLM_PORT:-4000}:4000
     networks:
       - openland
     labels:
