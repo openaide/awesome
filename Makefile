@@ -13,6 +13,8 @@ export COMPOSE_PROJECT_NAME = awesome
 export COMPOSE_IGNORE_ORPHANS = true
 
 ###
+build: gateway-build ## Build gateway (one litellm/traefik proxy)
+
 start: net gateway-up ## Start gateway (one litellm/traefik proxy)
 stop: gateway-down ## Stop gateway (one litellm/traefik proxy)
 
@@ -23,7 +25,7 @@ start-proxy: net litellm-up postgres-up traefik-up ## Start litellm and traefik 
 stop-proxy: litellm-down postgres-down traefik-down ## Stop litellm and traefik proxy services
 
 ##
-.PHONY: start stop start-all stop-all start-proxy stop-proxy
+.PHONY: build start stop start-all stop-all start-proxy stop-proxy
 
 ###
 traefik-up: ## Start traefik
@@ -40,13 +42,16 @@ litellm-down: ## Stop litellm
 	@cd docker/litellm && docker compose down
 
 ##
+gateway-build:
+	@cd docker/gateway && docker buildx bake --progress=plain --file ./compose.override.yml gw
+
 gateway-up:
 	@cd docker/gateway && docker compose up -d
 
 gateway-down:
 	@cd docker/gateway && docker compose down
 
-.PHONY: gateway-up gateway-down
+.PHONY: gateway-up gateway-down gateway-build
 
 ##
 postgres-up:

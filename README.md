@@ -21,20 +21,24 @@ git clone https://github.com/openaide/awesome.git
 git submodule update --init --recursive
 ```
 
-### Start gateway [LiteLLM](https://docs.litellm.ai/docs/simple_proxy) and [Traefik](https://doc.traefik.io/traefik/)
+### Start gateway (LiteLLM/Traefik)
 
-Running the gateway is optional but recommended.
+Running the gateway is optional but recommended. See [LiteLLM](https://docs.litellm.ai/docs/simple_proxy) and [Traefik](https://doc.traefik.io/traefik/) for more information.
 
 ```bash
 cd awesome/
 
+make build
+
 #
 export OPENAI_API_KEY=
 
-# you may change the default ports:
+# you may change the defaults:
 #
 # LiteLLM
 # export LLM_PORT=4000
+# export LITELLM_SALT_KEY=sk-1234
+# export LITELLM_MASTER_KEY=sk-1234
 #
 # Traefik
 # export WEB_PORT=80
@@ -70,6 +74,8 @@ You can setup other providers with LiteLLM Admin Panel [http://localhost:4000/ui
 Username: admin
 Password: sk-1234
 ```
+
+Configure LiteLLM models and settings here: [docker/gateway/etc/service/litellm/config.yaml](docker/gateway/etc/service/litellm/config.yaml).
 
 ### Services
 
