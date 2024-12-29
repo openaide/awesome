@@ -1,0 +1,96 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "GPT",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "sgpt",
+			"console": "integratedTerminal",
+			"args": ["What is the fibonacci sequence"],
+			"cwd": "${workspaceFolder}/local/shell_gpt",
+			"env": {
+				"DEFAULT_MODEL": "gpt-4o-mini",
+				"API_BASE_URL": "http://localhost:4000",
+				"USE_LITELLM": "true",
+				"OPENAI_API_KEY": "sk-1234",
+				"SHELL_INTERACTION": "false",
+				"PRETTIFY_MARKDOWN": "false",
+				"OS_NAME": "Darwin",
+				"SHELL_NAME": "bash",
+				"OPENAI_USE_FUNCTIONS": "true",
+			},
+			"justMyCode": false,
+			"stopOnEntry": false
+		},
+		{
+			"name": "Shell",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "sgpt",
+			"console": "integratedTerminal",
+			"args": ["--shell", "--interaction", "find all json files in current folder"],
+			"cwd": "${workspaceFolder}/local/shell_gpt",
+			"env": {
+				"DEFAULT_MODEL": "gpt-4o-mini",
+				"API_BASE_URL": "http://localhost:4000",
+				"USE_LITELLM": "true",
+				"OPENAI_API_KEY": "sk-1234",
+				"SHELL_INTERACTION": "false",
+				"PRETTIFY_MARKDOWN": "false",
+				"OS_NAME": "Darwin",
+				"SHELL_NAME": "bash",
+				"OPENAI_USE_FUNCTIONS": "true",
+			},
+			"justMyCode": false,
+			"stopOnEntry": false
+		},
+		{
+			"name": "Describe Shell",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "sgpt",
+			"console": "integratedTerminal",
+			"args": ["--describe-shell", "find all json files in current folder"],
+			"cwd": "${workspaceFolder}/local/shell_gpt",
+			"env": {
+				"DEFAULT_MODEL": "gpt-4o-mini",
+				"API_BASE_URL": "http://localhost:4000",
+				"USE_LITELLM": "true",
+				"OPENAI_API_KEY": "sk-1234",
+				"SHELL_INTERACTION": "false",
+				"PRETTIFY_MARKDOWN": "false",
+				"OS_NAME": "Darwin",
+				"SHELL_NAME": "bash",
+				"OPENAI_USE_FUNCTIONS": "true",
+			},
+			"justMyCode": false,
+			"stopOnEntry": false
+		},
+		{
+			"name": "Code",
+			"type": "debugpy",
+			"request": "launch",
+			"module": "sgpt",
+			"console": "integratedTerminal",
+			"args": ["--code", "solve classic fizz buzz problem using Python"],
+			"cwd": "${workspaceFolder}/local/shell_gpt",
+			"env": {
+				"DEFAULT_MODEL": "gpt-4o-mini",
+				"API_BASE_URL": "http://localhost:4000",
+				"USE_LITELLM": "true",
+				"OPENAI_API_KEY": "sk-1234",
+				"SHELL_INTERACTION": "false",
+				"PRETTIFY_MARKDOWN": "false",
+				"OS_NAME": "Darwin",
+				"SHELL_NAME": "bash",
+				"OPENAI_USE_FUNCTIONS": "true",
+			},
+			"justMyCode": false,
+			"stopOnEntry": false
+		},
+	]
+}

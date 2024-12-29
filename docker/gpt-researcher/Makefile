@@ -10,7 +10,8 @@ help: Makefile
 
 ##
 # APP_VERSION ?= master
-APP_VERSION ?= v3.1.4
+# APP_VERSION ?= v3.1.4
+APP_VERSION ?= v3.1.6
 APP_REPO_URL ?= https://github.com/assafelovic/gpt-researcher.git
 TARGET_DIR = local/gpt-researcher
 
@@ -26,8 +27,17 @@ clone:
 		echo "Directory exists."; \
 	fi;
 
+checkout:
+	@cd $(TARGET_DIR) && \
+	git stash && \
+	git checkout $(APP_VERSION) && \
+	git pull origin $(APP_VERSION) && \
+	git apply $(PATCH)
+
+.PHONY: clone checkout
+
 ##
-build: clone build-server build-nextjs ## Build mage
+build: clone checkout build-server build-nextjs ## Build mage
 	
 build-server: ## Build server
 	@docker buildx bake gptr-server
@@ -45,5 +55,5 @@ net: ## Create openland network
 	@docker network inspect openland >/dev/null 2>&1 \
 		|| docker network create openland
 
-.PHONY: clone build build-server build-nextjs up down net
+.PHONY: build build-server build-nextjs up down net
 ###

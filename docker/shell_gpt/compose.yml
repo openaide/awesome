@@ -1,0 +1,25 @@
+###
+name: awesome
+
+services:
+  shell-gpt:
+    build:
+      context: ./local/shell_gpt
+      dockerfile: $PWD/Dockerfile
+    image: openaide/shell_gpt
+    environment:
+      - OS_NAME=${OS_NAME:-Darwin}
+      - SHELL_NAME=${SHELL:-bash}
+      - DEFAULT_MODEL=gpt-4o-mini
+      - API_BASE_URL=http://host.docker.internal:4000
+      - USE_LITELLM=false
+      - OPENAI_API_KEY=sk-1234
+      - SHELL_INTERACTION=false
+      - PRETTIFY_MARKDOWN=false
+    volumes:
+      - gpt-cache:/tmp/shell_gpt
+    command: -s "$MESSAGE"
+
+volumes:
+  gpt-cache:
+###

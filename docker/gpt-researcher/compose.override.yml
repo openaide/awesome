@@ -34,6 +34,8 @@ services:
       # - SCRAPER=bs
       - SCRAPER=browser
       #
+      - SEARX_URL=
+      #
     volumes:
       - gptr-data:/docs
       - ./outputs/:/usr/src/app/outputs/
