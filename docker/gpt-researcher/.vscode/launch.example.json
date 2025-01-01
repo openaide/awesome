@@ -1,0 +1,40 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "app",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/app.py",
+			"console": "integratedTerminal",
+			"cwd": "${workspaceFolder}/",
+			"env": {
+				"RETRIEVER":"searx",
+			},
+			"envFile": "${workspaceFolder}/env_vars.txt",
+			"justMyCode": false,
+			"stopOnEntry": false
+		},
+		{
+			"name": "cli",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/local/gpt-researcher/cli.py",
+			"console": "integratedTerminal",
+			"args": [
+				"What are the main causes of climate change?",
+				"--report_type", "research_report",
+			],
+			"cwd": "${workspaceFolder}/",
+			"env": {
+				"RETRIEVER":"searx",
+			},
+			"envFile": "${workspaceFolder}/env_vars.txt",
+			"justMyCode": false,
+			"stopOnEntry": false
+		}
+	]
+}

@@ -56,4 +56,28 @@ net: ## Create openland network
 		|| docker network create openland
 
 .PHONY: build build-server build-nextjs up down net
+
+setup: ## setup (python)
+	@setup.sh
+
+searxng: start-searxng ## Start standalone SearxNG API Retriever
+start-searxng:
+	@docker compose -f compose.searxng.yml up -d
+
+stop-searxng: ## Stop standalone SearxNG API Retriever
+	@docker compose -f compose.searxng.yml down
+
+test: searxng ## Run llm/retriever tests
+	@test.sh
+
+cli: searxng ## Run CLI
+	@cli.sh
+
+app: searxng ## Run custom app
+	@app.sh
+
+tail-searxng: ## Tail logs
+	@docker compose -f compose.searxng.yml logs -f
+
+.PHONY: setup searxng start-searxng stop-searxng test cli app tail
 ###

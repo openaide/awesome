@@ -159,4 +159,10 @@ net: ## Create network
 	@docker network inspect openland >/dev/null 2>&1 \
 		|| docker network create openland
 .PHONY: net
+
+# https://github.com/qiangli/ai
+commit-message: ## Generate commit message and copy the message to clipboard
+	@git diff origin main|ai @ask write commit message for git =+
+
+.PHONY: commit-message
 ###

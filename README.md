@@ -156,6 +156,9 @@ The following tools are grouped by their main features. The AI landscape is chan
 ### Misc
 
 * [MarkItDown](https://github.com/microsoft/markitdown)
+* [Midscene.js](https://github.com/web-infra-dev/midscene)
+* [smolagents](https://github.com/huggingface/smolagents)
+* [STORM](https://github.com/stanford-oval/storm)
 
 ### Dependencies (optional)
 
