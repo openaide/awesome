@@ -11,27 +11,27 @@ help: Makefile
 ##
 # APP_VERSION ?= master
 # APP_VERSION ?= v3.1.4
-APP_VERSION ?= v3.1.6
+APP_VERSION ?= v.3.1.7
 APP_REPO_URL ?= https://github.com/assafelovic/gpt-researcher.git
 TARGET_DIR = local/gpt-researcher
 
-PATCH=$(PWD)/host.patch
+PATCH=$(PWD)/src.patch
 
 ##
 clone:
 	@if [ ! -d $(TARGET_DIR) ]; then \
 		echo "Cloning repository..."; \
 		git clone --branch $(APP_VERSION) $(APP_REPO_URL) $(TARGET_DIR); \
-		cd $(TARGET_DIR) && git checkout -b $(APP_VERSION) && git apply $(PATCH); \
+		cd $(TARGET_DIR) && git checkout -b $(APP_VERSION); \
 	else \
 		echo "Directory exists."; \
 	fi;
 
 checkout:
 	@cd $(TARGET_DIR) && \
+	git fetch origin && \
 	git stash && \
 	git checkout $(APP_VERSION) && \
-	git pull origin $(APP_VERSION) && \
 	git apply $(PATCH)
 
 .PHONY: clone checkout

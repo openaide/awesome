@@ -30,9 +30,13 @@ block_ip = [
   # '257.1.1.1',      # invalid IP --> will be ignored, logged in ERROR class
 ]
 
+# pass_ip = [
+#   # '192.168.0.0/16',      # IPv4 private network
+#   # 'fe80::/10'            # IPv6 linklocal / wins over botdetection.ip_limit.filter_link_local
+# ]
 pass_ip = [
-  # '192.168.0.0/16',      # IPv4 private network
-  # 'fe80::/10'            # IPv6 linklocal / wins over botdetection.ip_limit.filter_link_local
+  '0.0.0.0/0',     # This covers all IPv4 addresses
+  '::/0'           # This covers all IPv6 addresses
 ]
 
 # Activate passlist of (hardcoded) IPs from the SearXNG organization,

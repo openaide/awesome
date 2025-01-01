@@ -8,8 +8,6 @@ services:
     build: 
       context: ./local/gpt-researcher
       dockerfile: Dockerfile
-    # ports:
-    #   - 8000:8000
 
   gptr-nextjs:
     pull_policy: build
@@ -19,6 +17,4 @@ services:
       context: ./local/gpt-researcher/frontend/nextjs
       dockerfile: Dockerfile.dev
       # dockerfile: Dockerfile
-    # ports:
-    #   - 3000:3000
-
+ 

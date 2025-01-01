@@ -124,7 +124,7 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [screenshot-to-code](docker/screenshot-to-code/REAMDE.md)
 * [Bolt.diy](docker/bolt.diy/README.md)
 
-### Command Line
+### Command line
 
 * [AI](https://github.com/qiangli/ai.git)
 * [ShellGPT](https://github.com/TheR1D/shell_gpt)
@@ -166,7 +166,7 @@ The following tools are grouped by their main features. The AI landscape is chan
 
 * [PromptTools](https://github.com/hegelai/prompttools)
 * [Prompt Engineering Guide](https://www.promptingguide.ai/)
-* [Prompting Guids](https://cookbook.openai.com/articles/related_resources#prompting-guides)
+* [Prompting Guides](https://cookbook.openai.com/articles/related_resources#prompting-guides)
 * ChatGPT [prompt engineering](https://platform.openai.com/docs/guides/prompt-engineering)
 * OpenHands [prompting best practices](https://docs.all-hands.dev/modules/usage/prompting-best-practices)
 * Aider [usage tips](https://aider.chat/docs/usage/tips.html)

@@ -5,7 +5,7 @@ services:
     environment:
       - OPENAI_API_BASE=http://host.docker.internal:4000/v1
       - OPENAI_API_KEY=sk-1234
-      - TAVILY_API_KEY="${TAVILY_API_KEY:-}"
+      # - TAVILY_API_KEY="${TAVILY_API_KEY:-}"
       # - LANGCHAIN_API_KEY="${LANGCHAIN_API_KEY:-}"
       ##
       # local/gpt-researcher/docs/docs/gpt-researcher/gptr/config.md
@@ -14,7 +14,8 @@ services:
       # - GOOGLE_API_KEY=""
       # - RETRIEVER=custom
       - RETRIEVER=searx
-      - RETRIEVER_ENDPOINT=http://searxng:8080/
+      - SEARX_URL=http://searxng:8080/
+      # - RETRIEVER_ENDPOINT=http://searxng:8080/
       # - RETRIEVER_ARG_API_KEY=
       #
       - EMBEDDING=openai:text-embedding-3-small
@@ -34,20 +35,21 @@ services:
       # - SCRAPER=bs
       - SCRAPER=browser
       #
-      - SEARX_URL=
-      #
     volumes:
       - gptr-data:/docs
       - ./outputs/:/usr/src/app/outputs/
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
+    # ports:
+    #   - 8000:8000
     networks:
       - openland
     labels:
       - traefik.enable=true
       - traefik.docker.network=openland
-      - traefik.http.routers.gptr-server-router.rule=Host(`gptr-server.localhost`)
+      - traefik.http.routers.gptr-server-router.rule=Host(`gptr.localhost`) && (PathPrefix(`/ws`) || PathPrefix(`/upload`) || PathPrefix(`/files`) || PathPrefix(`/outputs`) || PathPrefix(`/getConfig`) || PathPrefix(`/setConfig`))
+      - traefik.http.routers.gptr-server-router.priority=100
       - traefik.http.routers.gptr-server-router.entrypoints=web
       - traefik.http.services.gptr-server.loadbalancer.server.port=8000
       - custom.traefik.group=openaide
@@ -58,12 +60,15 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
+    # ports:
+    #   - 3000:3000
     networks:
       - openland
     labels:
       - traefik.enable=true
       - traefik.docker.network=openland
-      - traefik.http.routers.gptr-router.rule=Host(`gptr.localhost`) || Host(`gptr-nextjs.localhost`)
+      - traefik.http.routers.gptr-router.rule=Host(`gptr.localhost`) && PathPrefix(`/`)
+      - traefik.http.routers.gptr-router.priority=10
       - traefik.http.routers.gptr-router.entrypoints=web
       - traefik.http.services.gptr.loadbalancer.server.port=3000
       - traefik.http.services.gptr.loadbalancer.server.scheme=http
@@ -73,6 +78,11 @@ services:
     image: searxng/searxng
     # ports:
     #   - "${PORT}:8080"
+    environment:
+      - SEARXNG_PORT=8080
+      - SEARXNG_BIND_ADDRESS=0.0.0.0
+    networks:
+      - openland
     volumes:
       - "./searxng:/etc/searxng"
     labels:
