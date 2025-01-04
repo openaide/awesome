@@ -11,5 +11,6 @@ export PATH=".venv/bin:$PATH"
 python -m pip install --upgrade --no-cache-dir pip
 python -m pip install --no-cache-dir -r "local/gpt-researcher/requirements.txt"
 python -m pip install selenium
+python -m pip install duckduckgo-search
 
 ##

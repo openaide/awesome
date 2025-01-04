@@ -80,4 +80,17 @@ tail-searxng: ## Tail logs
 	@docker compose -f compose.searxng.yml logs -f
 
 .PHONY: setup searxng start-searxng stop-searxng test cli app tail
+
+##
+docker-cli: ## Build and run CLI in docker
+	@docker-cli.sh
+
+##
+tidy:
+	@go mod tidy && go fmt ./gptr/... && go vet ./gptr/...
+
+build-gptr: tidy ## Build and run gptr (golang docker wrapper)
+	@go build -o bin/gptr ./gptr/...
+
+.PHONY: tidy build-gptr
 ###

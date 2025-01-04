@@ -11,9 +11,6 @@
 			"program": "${workspaceFolder}/app.py",
 			"console": "integratedTerminal",
 			"cwd": "${workspaceFolder}/",
-			"env": {
-				"RETRIEVER":"searx",
-			},
 			"envFile": "${workspaceFolder}/env_vars.txt",
 			"justMyCode": false,
 			"stopOnEntry": false
@@ -29,9 +26,6 @@
 				"--report_type", "research_report",
 			],
 			"cwd": "${workspaceFolder}/",
-			"env": {
-				"RETRIEVER":"searx",
-			},
 			"envFile": "${workspaceFolder}/env_vars.txt",
 			"justMyCode": false,
 			"stopOnEntry": false
