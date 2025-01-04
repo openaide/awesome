@@ -1,0 +1,9 @@
+###
+name: awesome
+
+services:
+  smolagents:
+    build:
+      context: ./local/smolagents
+      dockerfile: $PWD/Dockerfile
+    image: openaide/smolagents

@@ -162,7 +162,7 @@ net: ## Create network
 
 # https://github.com/qiangli/ai
 commit-message: ## Generate commit message and copy the message to clipboard
-	@git diff origin main|ai @ask write commit message for git =+
+	@git diff origin main|ai @ask write commit message for git without code blocks =+
 
 .PHONY: commit-message
 ###
