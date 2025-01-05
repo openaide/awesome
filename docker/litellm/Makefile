@@ -22,10 +22,14 @@ clone:
 	else \
 		echo "Directory exists."; \
 	fi; \
-	cd $(TARGET_DIR) && git pull origin $(APP_VERSION)
+
+checkout:
+	@cd $(TARGET_DIR) && git stash && git pull origin $(APP_VERSION)
+
+.PHONY: clone checkout
 
 ##
-build: clone ## Build LiteLLM
+build: clone checkout ## Build LiteLLM
 	@docker compose build
 
 up: net ## Start LiteLLM
@@ -38,5 +42,5 @@ net: ## Create openland network
 	@docker network inspect openland >/dev/null 2>&1 \
 		|| docker network create openland
 
-.PHONY: clone build up down net
+.PHONY: build up down net
 ###

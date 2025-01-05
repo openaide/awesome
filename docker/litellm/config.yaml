@@ -17,6 +17,18 @@ model_list:
       api_key: os.environ/OPENAI_API_KEY
       rpm: 6
 
+  - model_name: o1-mini
+    litellm_params:
+      model: openai/o1-mini
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
+  - model_name: o1
+    litellm_params:
+      model: openai/o1
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
   - model_name: text-embedding-3-small
     litellm_params:
       model: openai/text-embedding-3-small

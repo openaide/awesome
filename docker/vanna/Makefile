@@ -19,21 +19,23 @@ clone:
 	@if [ ! -d $(TARGET_DIR) ]; then \
 		echo "Cloning repository..."; \
 		git clone --branch $(APP_VERSION) $(APP_REPO_URL) $(TARGET_DIR); \
-		cd $(TARGET_DIR) && git checkout $(APP_VERSION) && git apply $(PATCH); \
 	else \
 		echo "Directory exists."; \
 	fi;
 
+checkout:
+	@cd $(TARGET_DIR) && git stash && git checkout $(APP_VERSION) && git apply $(PATCH)
+
 # debug
-setup:
+setup-vscode:
 	@cp .vscode/launch.example.json .vscode/launch.json && \
 	touch .env && \
 	echo "Please update .env file with database credentials"
 
-.PHONY: clone setup
+.PHONY: clone checkout setup-vscode
 
 ##
-build: clone ## Build docker images
+build: clone checkout ## Build docker images
 	@docker buildx bake
 
 up: ## Start
@@ -49,8 +51,8 @@ net: ## Create openland network
 proxy: ## build proxy (go)
 	@build-proxy.sh
 
-app: ## install & build app (python)
-	@build-app.sh
+setup: ## setup venv and install requirements
+	@setup.sh
 
-.PHONY: build up down net proxy app
+.PHONY: build up down net proxy setup
 ##

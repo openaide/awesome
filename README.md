@@ -158,7 +158,15 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [MarkItDown](https://github.com/microsoft/markitdown)
 * [Midscene.js](https://github.com/web-infra-dev/midscene)
 * [smolagents](https://github.com/huggingface/smolagents)
+* [SWE-agent](https://github.com/SWE-agent/SWE-agent)
+* [CodeAct](https://github.com/All-Hands-AI/OpenHands/tree/main/openhands/agenthub/codeact_agent)
 * [STORM](https://github.com/stanford-oval/storm)
+* [Vector Databases](https://cookbook.openai.com/examples/vector_databases/readme)
+* [Sentence Transformers](https://www.sbert.net/)
+* [PR Agent](https://github.com/Codium-ai/pr-agent)
+* [Bloop](https://github.com/BloopAI/bloop)
+* [Awesome AI Tools](https://github.com/mahseema/awesome-ai-tools)
+* [Awesome AI](https://github.com/re50urces/Awesome-AI)
 
 ### Dependencies (optional)
 
@@ -176,4 +184,5 @@ The following tools are grouped by their main features. The AI landscape is chan
 
 ## Benchmark
 
-[SWE-bench Leaderboard](https://www.swebench.com/)
+* SWE-bench [Leaderboard](https://www.swebench.com/)
+* Massive Text Embedding Benchmark (MTEB) [Leaderboard](https://huggingface.co/spaces/mteb/leaderboard)

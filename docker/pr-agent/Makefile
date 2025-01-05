@@ -1,5 +1,5 @@
 #
-# make aider
+# make pr agent
 #
 
 ###
@@ -11,8 +11,8 @@ help: Makefile
 
 ##
 APP_VERSION ?= main
-APP_REPO_URL ?= https://github.com/Aider-AI/aider.git
-TARGET_DIR = local/aider
+APP_REPO_URL ?= https://github.com/Codium-ai/pr-agent.git
+TARGET_DIR = local/pr-agent
 
 ##
 clone:
@@ -32,24 +32,15 @@ checkout:
 .PHONY: clone checkout
 
 ##
-build: clone checkout ## Build aider
-	@docker compose --profile base build aider-base
+build: clone checkout ## Build
 	@docker compose build
 
-up: net ## Start aider
-	@docker compose up -d
+run:  ## Run
+	@docker compose run --rm pr-agent
 
-down:  ## Stop aider
-	@docker compose down
+.PHONY: build run
 
-net: ## Create openland network
-	@docker network inspect openland >/dev/null 2>&1 \
-		|| docker network create openland
-
-.PHONY: build up down net
-
-#
-setup: ## setup aider (python)
+setup: ## setup venv (python)
 	@setup.sh
 .PHONY: setup
 ###

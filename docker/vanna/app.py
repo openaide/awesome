@@ -72,12 +72,12 @@ def basic_training():
     Train the model with basic SQL commands.
     """
     vn.train(sql="SELECT version();")
-    vn.train(sql="SELECT * FROM pg_catalog.pg_user;")
-    vn.train(sql="SELECT * FROM pg_catalog.pg_database;")
+    # vn.train(sql="SELECT * FROM pg_catalog.pg_user;")
+    # vn.train(sql="SELECT * FROM pg_catalog.pg_database;")
 
-    # df_information_schema = vn.run_sql("""
-    #     SELECT * FROM INFORMATION_SCHEMA.COLUMNS
-    # """)
+    df_information_schema = vn.run_sql("""
+        SELECT * FROM INFORMATION_SCHEMA.COLUMNS
+    """)
     # plan = vn.get_training_plan_generic(df_information_schema)
     # vn.train(plan=plan)
 
@@ -134,7 +134,7 @@ def train_model():
     Train the model with basic SQL commands and the provided training data.
     """
     train_path = os.getenv("TRAIN_PATH", "./local/train")
-    basic_training()
+    # basic_training()
     find_and_train(train_path)
     set_training_done()
 
@@ -146,7 +146,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
 
     def error(self, message):
         sys.stderr.write(f"Error: {message}\n")
-        sys.stderr.write("You must specify one of train or serve\n")
+        sys.stderr.write("You must specify one of train, ask, or serve\n")
         self.print_help()
         sys.exit(2)
 
@@ -165,6 +165,15 @@ def main():
 
     # Sub-parser for the "train" command
     subparsers.add_parser("train", help="Start training")
+
+    # Sub-parser for the "ask" command
+    ask_parser = subparsers.add_parser("ask", help="Ask a question")
+    ask_parser.add_argument(
+        "--question",
+        type=str,
+        help="Specify the question to ask",
+        default="What is the version of the database?",
+    )
 
     # Sub-parser for the "serve" command
     serve_parser = subparsers.add_parser("serve", help="Start the server")
@@ -217,6 +226,11 @@ def main():
         init_db()
         train_model()
         logging.info("Training completed successfully")
+    elif args.command == "ask":
+        init_db()
+        if not is_training_done():
+            train_model()
+        vn.ask(question=args.question)
     elif args.command == "serve":
         init_db()
         if not is_training_done():

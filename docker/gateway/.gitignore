@@ -1,0 +1,4 @@
+etc/service/litellm/supervise/
+etc/service/postgresql/supervise/
+etc/service/traefik/index.html
+etc/service/traefik/supervise/

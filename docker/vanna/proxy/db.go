@@ -99,7 +99,7 @@ func RetrieveDatabases(ctx context.Context, q Queryable) ([]*PGDatabase, error) 
 }
 
 func Connect(db *DBInfo) (*sql.DB, error) {
-	return sql.Open(db.DBName, db.DSN())
+	return sql.Open("postgres", db.DSN())
 }
 
 func Ping(db *DBInfo) error {

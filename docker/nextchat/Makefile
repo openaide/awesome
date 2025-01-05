@@ -22,10 +22,12 @@ clone:
 	else \
 		echo "Directory exists."; \
 	fi; \
-	cd $(TARGET_DIR) && git pull origin $(APP_VERSION)
+
+checkout:
+	@cd $(TARGET_DIR) && git checkout $(APP_VERSION)
 
 ##
-build: clone ## Build nextchat image
+build: clone checkout ## Build nextchat image
 	@docker buildx bake
 
 up: ## Start nextchat

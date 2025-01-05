@@ -17,6 +17,18 @@ model_list:
       api_key: os.environ/OPENAI_API_KEY
       rpm: 6
 
+  - model_name: o1-mini
+    litellm_params:
+      model: openai/o1-mini
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
+  - model_name: o1
+    litellm_params:
+      model: openai/o1
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+
   - model_name: text-embedding-3-small
     litellm_params:
       model: openai/text-embedding-3-small
@@ -50,6 +62,12 @@ model_list:
   - model_name: gpt-4o-2024-11-20
     litellm_params:
       model: openai/gpt-4o-2024-11-20
+      api_key: os.environ/OPENAI_API_KEY
+      rpm: 6
+  
+  - model_name: dall-e-3
+    litellm_params:
+      model: openai/dall-e-3
       api_key: os.environ/OPENAI_API_KEY
       rpm: 6
 

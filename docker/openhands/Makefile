@@ -10,9 +10,10 @@ help: Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ##
-APP_VERSION ?= main
-APP_REPO_URL ?= https://github.com/qiangli/OpenHands.git
-# APP_REPO_URL ?= https://github.com/All-Hands-AI/OpenHands.git
+# APP_VERSION ?= main
+# APP_REPO_URL ?= https://github.com/qiangli/OpenHands.git
+APP_VERSION ?= 0.19.0
+APP_REPO_URL ?= https://github.com/All-Hands-AI/OpenHands.git
 TARGET_DIR = local/openhands
 
 ##
@@ -22,11 +23,15 @@ clone:
 		git clone --branch $(APP_VERSION) $(APP_REPO_URL) $(TARGET_DIR); \
 	else \
 		echo "Directory exists."; \
-	fi; \
-	cd $(TARGET_DIR) && git pull origin $(APP_VERSION)
+	fi;
+
+checkout:
+	@cd $(TARGET_DIR) && git stash && git pull origin $(APP_VERSION) && git checkout $(APP_VERSION)
+
+.PHONY: clone checkout
 
 ##
-build: clone ## Build mage
+build: clone checkout ## Build mage
 	@docker compose build
 
 up: net ## Start
@@ -46,6 +51,9 @@ cli: ## Build openhands cli/wrapper for linux/macos/windows
 clean: ## Clean build artifacts
 	@rm -rf cli/dist/*
 
-.PHONY: clone build up down net
+.PHONY: build up down net
 .PHONY: cli clean
+
+setup: ## Setup openhands
+	@setup.sh
 ###

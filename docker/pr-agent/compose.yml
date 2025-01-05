@@ -1,0 +1,13 @@
+###
+services:
+  pr-agent:
+    image: openaide/pr-agent:latest
+    build:
+      context: ./local/pr-agent/docker
+    environment:
+      - OPENAI.KEY=${OPENAI_API_KEY}
+      - GITHUB.USER_TOKEN=${GITHUB_TOKEN}
+    command: --pr_url file://./ review
+    # stdin_open: true
+    # tty: true
+    restart: 'no'
