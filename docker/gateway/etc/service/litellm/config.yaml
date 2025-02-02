@@ -71,6 +71,21 @@ model_list:
       api_key: os.environ/OPENAI_API_KEY
       rpm: 6
 
+  - model_name: deepseek-r1:7b
+    litellm_params:
+      model: ollama/deepseek-r1:7b
+      api_base: http://host.docker.internal:11434/
+      api_key: none
+      rpm: 1440
+
+  - model_name: deepseek-r1:14b
+    litellm_params:
+      model: ollama/deepseek-r1:14b
+      api_base: http://host.docker.internal:11434/
+      api_key: none
+      rpm: 1440
+
+#
 # litellm_settings: # module level litellm settings - https://github.com/BerriAI/litellm/blob/main/litellm/__init__.py
 #   drop_params: True
 #   success_callback: ["langfuse"] # OPTIONAL - if you want to start sending LLM Logs to Langfuse. Make sure to set `LANGFUSE_PUBLIC_KEY` and `LANGFUSE_SECRET_KEY` in your env

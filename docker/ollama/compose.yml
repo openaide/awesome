@@ -10,6 +10,7 @@ services:
       # target: runtime-arm64
       # target: runtime-amd64
       # target; runtime-rocm
+    container_name: ollama
     image: openaide/ollama
     entrypoint: /bin/ollama
     command: serve
