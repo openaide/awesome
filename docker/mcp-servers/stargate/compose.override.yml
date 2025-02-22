@@ -1,0 +1,9 @@
+#
+
+services:
+  stargate:
+    image: openaide/stargate
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: stargate

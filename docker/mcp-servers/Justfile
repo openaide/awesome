@@ -1,0 +1,112 @@
+#!/usr/bin/env -S just --justfile
+# https://github.com/casey/just
+
+set shell := ["bash", "-c"]
+
+default:
+    @just --list
+
+# Define variables
+
+TARGET_DIR := "local/servers"
+APP_VERSION := "main"
+APP_REPO_URL := "https://github.com/modelcontextprotocol/servers.git"
+
+#
+
+clone:
+    git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}} || echo "Already cloned"
+
+checkout: clone
+    cd {{TARGET_DIR}} && \
+    git fetch origin && \
+    git stash && \
+    git checkout {{APP_VERSION}} && \
+    git pull origin {{APP_VERSION}}
+
+##
+
+clone-mcp-chatbot:
+    git clone --branch main https://github.com/3choff/mcp-chatbot.git local/chatbot || echo "Already cloned"
+
+clone-docker-mcp:
+    git clone --branch main https://github.com/QuantGeekDev/docker-mcp.git local/docker-mcp || echo "Already cloned"
+
+# clone-bridge:
+#     git clone --branch master https://github.com/SecretiveShell/MCP-Bridge.git local/bridge || echo "Already cloned"
+
+# clone-gateway:
+#     git clone --branch main https://github.com/lightconetech/mcp-gateway.git local/gateway || echo "Already cloned"
+
+clone-mcp-golang:
+    git clone --branch main https://github.com/metoro-io/mcp-golang.git local/mcp-golang || echo "Already cloned"
+
+clone-mcp-go:
+    git clone --branch main https://github.com/mark3labs/mcp-go.git local/mcp-go || echo "Already cloned"
+
+clone-mcp-k8s:
+    git clone --branch main https://github.com/Flux159/mcp-server-kubernetes.git local//mcp-server-kubernetes || echo "Already cloned"
+
+clone-ddg-mcp-server:
+    git clone --branch main https://github.com/nickclyde/duckduckgo-mcp-server.git local/ddg-mcp-server || echo "Already cloned"
+
+clone-mcp-filesystem-server:
+    git clone --branch main https://github.com/mark3labs/mcp-filesystem-server.git local/mcp-filesystem-server || echo "Already cloned"
+
+
+##
+
+build-redis:
+    cd local/servers && docker build -t mcp/redis -f src/redis/Dockerfile .
+
+build-postgres:
+    cd local/servers && docker build -t mcp/postgres -f src/postgres/Dockerfile .
+
+build-git:
+    cd local/servers/src/git && docker build -t mcp/git -f Dockerfile .
+
+build-brave:
+    cd local/servers && docker build -t mcp/brave-search:latest -f src/brave-search/Dockerfile .
+
+build-filesystem:
+    cd local/servers && docker build -t mcp/filesystem -f src/filesystem/Dockerfile .
+
+build-fetch:
+    cd local/servers/src/fetch && docker build -t mcp/fetch -f Dockerfile .
+
+build-github:
+    cd local/servers && docker build -t mcp/github -f src/github/Dockerfile .
+
+build-google-maps:
+    cd local/servers && docker build -t mcp/google-maps -f src/google-maps/Dockerfile .
+
+build-memory:
+    cd local/servers && docker build -t mcp/memory -f src/memory/Dockerfile .
+
+build-time:
+    cd local/servers/src/time && docker build -t mcp/time -f Dockerfile .
+
+build-ddg:
+    cp ddg/Dockerfile local/ddg-mcp-server/Dockerfile
+    cd local/ddg-mcp-server && docker build -t mcp/ddg -f Dockerfile .
+
+build-docker:
+    cp docker/Dockerfile local/docker-mcp/Dockerfile
+    cd local/docker-mcp && docker build -t mcp/docker -f Dockerfile .
+
+# Build
+build: build-fetch build-time build-ddg build-docker
+
+# Run MCP chatbot
+run-chatbot:
+    PATH=".venv/bin:$PATH" python local/chatbot/main.py
+
+# Run docker
+docker-dev image:
+    docker run --pull never  -v /var/run/docker.sock:/var/run/docker.sock --rm -it {{image}} bash
+
+##
+
+setup:
+    setup.sh
+###

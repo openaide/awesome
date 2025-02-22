@@ -168,6 +168,9 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [Awesome AI Tools](https://github.com/mahseema/awesome-ai-tools)
 * [Awesome AI](https://github.com/re50urces/Awesome-AI)
 * [OUMI](https://github.com/oumi-ai/oumi)
+* [Gemini CLI](https://github.com/eliben/gemini-cli)
+* [Swarm](https://github.com/openai/swarm)
+* [Magentic-One](https://github.com/microsoft/autogen/tree/main/python/packages/autogen-magentic-one)
 
 ### Dependencies (optional)
 

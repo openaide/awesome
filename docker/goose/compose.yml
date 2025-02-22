@@ -1,0 +1,11 @@
+###
+name: awesome
+
+services:
+  goose:
+    build:
+      context: ./local/goose
+      dockerfile: $PWD/Dockerfile
+    image: openaide/goose
+
+###

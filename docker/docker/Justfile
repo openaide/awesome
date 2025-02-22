@@ -1,0 +1,38 @@
+#!/usr/bin/env -S just --justfile
+
+default:
+    @just --list
+
+# Define variables
+
+TARGET_DIR := "local/cli"
+APP_VERSION := "v28.0.0"
+APP_REPO_URL := "https://github.com/docker/cli.git"
+
+#
+clone:
+    git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}} || echo "Already cloned"
+
+checkout: clone
+    cd {{TARGET_DIR}} && \
+    git fetch origin && \
+    git stash && \
+    git checkout {{APP_VERSION}} && \
+    git pull origin {{APP_VERSION}}
+
+# build: clone checkout
+#     cd {{TARGET_DIR}} && \
+#     cargo build
+
+# build: clone checkout
+#     docker compose build
+
+# up: net
+#     docker compose up -d
+
+# down:
+#     docker compose down
+
+# net:  # Create openland network
+#     docker network inspect openland >/dev/null 2>&1 \
+#         || docker network create openland

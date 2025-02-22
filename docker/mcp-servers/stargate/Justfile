@@ -1,0 +1,32 @@
+#!/usr/bin/env -S just --justfile
+
+set shell := ["bash", "-c"]
+
+default:
+    @just --list
+
+tidy:
+	go mod tidy
+	go fmt ./...
+	go vet ./...
+
+build: tidy
+	@mkdir -p bin
+	go build -o bin/stargate ./main.go
+
+run:
+	go run main.go
+
+# docker build
+docker-build:
+	# docker build -t mcp/stargate .
+	docker compose build
+
+# docker dev
+docker-dev:
+	# docker run -v /var/run/docker.sock:/var/run/docker.sock --rm -it mcp/stargate bash
+	docker compose run --rm stargate bash
+
+docker-serve:
+	# docker run -v /var/run/docker.sock:/var/run/docker.sock -p 58080:58080 --rm -it mcp/stargate /stargate
+	docker compose up -d

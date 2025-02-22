@@ -11,7 +11,8 @@ help: Makefile
 ##
 # APP_VERSION ?= master
 # APP_VERSION ?= v3.1.4
-APP_VERSION ?= v.3.1.7
+# APP_VERSION ?= v.3.1.7
+APP_VERSION ?= v3.1.9
 APP_REPO_URL ?= https://github.com/assafelovic/gpt-researcher.git
 TARGET_DIR = local/gpt-researcher
 

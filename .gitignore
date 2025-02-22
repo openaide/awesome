@@ -13,4 +13,5 @@ local/
 .aider*
 ##
 docker/gateway/etc/service/traefik/index.html*
+docker/gpt-researcher/gptr/outputs/*
 ##
