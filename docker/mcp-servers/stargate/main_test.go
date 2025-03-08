@@ -69,25 +69,67 @@ func TestServer(t *testing.T) {
 	}
 
 	// Call a tool
-	req := mcp.CallToolRequest{}
-	req.Params.Name = "time__convert_time"
-	req.Params.Arguments = map[string]interface{}{
-		"source_timezone": "America/Los_Angeles",
-		"time":            "16:30",
-		"target_timezone": "Asia/Shanghai",
-	}
-	result, err := client.CallTool(ctx, req)
-	if err != nil {
-		t.Fatalf("Failed to call: %+v %v", req, err)
+	callTests := []struct {
+		name       string
+		toolName   string
+		arguments  map[string]interface{}
+		wantResult bool
+	}{
+		{
+			name:     "Convert time",
+			toolName: "time__convert_time",
+			arguments: map[string]interface{}{
+				"source_timezone": "America/Los_Angeles",
+				"time":            "16:30",
+				"target_timezone": "Asia/Shanghai",
+			},
+			wantResult: true,
+		},
+		{
+			name:     "Search on DuckDuckGo",
+			toolName: "ddg__search",
+			arguments: map[string]interface{}{
+				"query": "weather in sfo ca",
+				"max_results": 1,
+			},
+			wantResult: true,
+		},
+		{
+			name:     "List Docker Containers",
+			toolName: "docker__list-containers",
+			arguments: map[string]interface{}{
+				"container_name": "stargate",
+			},
+			wantResult: true,
+		},
+		{
+			name:     "Get Docker Logs",
+			toolName: "docker__get-logs",
+			arguments: map[string]interface{}{
+				"container_name": "stargate",
+			},
+			wantResult: true,
+		},
 	}
 
-	for _, content := range result.Content {
-		if textContent, ok := content.(mcp.TextContent); ok {
-			fmt.Println(textContent.Text)
-		} else {
-			jsonBytes, _ := json.MarshalIndent(content, "", "  ")
-			fmt.Println(string(jsonBytes))
-		}
-	}
+	for _, test := range callTests {
+		t.Run(test.name, func(t *testing.T) {
+			req := mcp.CallToolRequest{}
+			req.Params.Name = test.toolName
+			req.Params.Arguments = test.arguments
 
+			result, err := client.CallTool(ctx, req)
+			if err != nil {
+				t.Fatalf("Failed to call: %+v %v", req, err)
+			}
+			for _, content := range result.Content {
+				if textContent, ok := content.(mcp.TextContent); ok {
+					fmt.Println(textContent.Text)
+				} else {
+					jsonBytes, _ := json.MarshalIndent(content, "", "  ")
+					fmt.Println(string(jsonBytes))
+				}
+			}
+		})
+	}
 }

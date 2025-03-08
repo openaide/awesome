@@ -177,7 +177,11 @@ func (s *SSEServer) handleMessage(w http.ResponseWriter, r *http.Request) {
 		s.writeJSONRPCError(w, nil, mcp.INVALID_PARAMS, "Invalid session ID")
 		return
 	}
-	session := sessionI.(*sseSession)
+	session, ok := sessionI.(*sseSession)
+	if !ok {
+		s.writeJSONRPCError(w, nil, mcp.INTERNAL_ERROR, "Invalid session")
+		return
+	}
 
 	// Parse message as raw JSON
 	var rawMessage json.RawMessage
@@ -193,7 +197,9 @@ func (s *SSEServer) handleMessage(w http.ResponseWriter, r *http.Request) {
 	if response != nil {
 		eventData, _ := json.Marshal(response)
 		fmt.Fprintf(session.writer, "event: message\ndata: %s\n\n", eventData)
-		session.flusher.Flush()
+		if session.flusher != nil {
+			session.flusher.Flush()
+		}
 
 		// Send HTTP response
 		w.Header().Set("Content-Type", "application/json")

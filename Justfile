@@ -24,7 +24,7 @@ net:
 
 # generate a git commit message and copy it to clipboard
 git-message:
-    git diff origin/main | ai @git/conventional =+
+    git diff origin/main | ai @git/conventional }
 
 # generate a git commit message, copy it to clipboard, and commit
 git-commit: git-message

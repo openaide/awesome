@@ -4,12 +4,13 @@ name: awesome
 services:
   stargate:
     privileged: true
+    container_name: "stargate"
     image: openaide/stargate
     ports:
       - "${MCP_PORT:-58080}:58080"
     restart: always
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - openland
     pull_policy: never

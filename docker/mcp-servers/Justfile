@@ -53,7 +53,6 @@ clone-ddg-mcp-server:
 clone-mcp-filesystem-server:
     git clone --branch main https://github.com/mark3labs/mcp-filesystem-server.git local/mcp-filesystem-server || echo "Already cloned"
 
-
 ##
 
 build-redis:
@@ -95,7 +94,7 @@ build-docker:
     cd local/docker-mcp && docker build -t mcp/docker -f Dockerfile .
 
 # Build
-build: build-fetch build-time build-ddg build-docker
+build: build-time build-ddg build-docker
 
 # Run MCP chatbot
 run-chatbot:

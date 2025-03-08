@@ -4,6 +4,7 @@
 
 https://modelcontextprotocol.io/introduction
 https://github.com/modelcontextprotocol/servers
+https://github.com/modelcontextprotocol/create-python-server
 
 ## MCP Chatbot
 
@@ -19,6 +20,10 @@ https://github.com/metoro-io/mcp-golang
 https://github.com/Automata-Labs-team/code-sandbox-mcp
 
 ## Python
+
+https://docs.astral.sh/uv/
+https://hatch.pypa.io/latest/
+https://packaging.python.org/en/latest/overview/
 
 https://github.com/nickclyde/duckduckgo-mcp-server.git
 https://github.com/QuantGeekDev/docker-mcp
