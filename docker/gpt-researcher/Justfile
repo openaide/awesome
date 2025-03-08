@@ -1,0 +1,78 @@
+#!/usr/bin/env -S just --justfile
+
+# Variables
+APP_VERSION := "v3.2.3"
+APP_REPO_URL := "https://github.com/assafelovic/gpt-researcher.git"
+TARGET_DIR := "local/gpt-researcher"
+PATCH := "src.patch"
+
+default:
+	@just --list
+
+# Recipes
+clone:
+	@if [ ! -d {{TARGET_DIR}} ]; then \
+		echo "Cloning repository..."; \
+		git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}}; \
+		cd {{TARGET_DIR}} && git checkout -b {{APP_VERSION}}; \
+	else \
+		echo "Directory exists."; \
+	fi;
+
+checkout:
+	@cd {{TARGET_DIR}} && \
+	git fetch origin && \
+	git stash && \
+	git checkout {{APP_VERSION}}
+	# git apply ../../{{PATCH}}
+
+# build: clone checkout build-server build-nextjs
+# 	@echo "Build successful"
+
+# build-server:
+# 	@docker buildx bake gptr-server
+
+# build-nextjs:
+# 	@docker buildx bake gptr-nextjs
+
+# up: net
+# 	@docker compose up -d
+
+# down:
+# 	@docker compose down
+
+# net:
+# 	@docker network inspect openland >/dev/null 2>&1 || docker network create openland
+
+setup:
+	@setup.sh
+
+# searxng: start-searxng
+# 	@echo "SearxNG started"
+
+# start-searxng:
+# 	@docker compose -f compose.searxng.yml up -d
+
+# stop-searxng:
+# 	@docker compose -f compose.searxng.yml down
+
+# test: searxng
+# 	@test.sh
+
+# cli: searxng
+# 	@cli.sh
+
+# app: searxng
+# 	@app.sh
+
+# tail-searxng:
+# 	@docker compose -f compose.searxng.yml logs -f
+
+# docker-cli:
+# 	@docker-cli.sh
+
+# tidy:
+# 	@go mod tidy && go fmt ./gptr/... && go vet ./gptr/...
+
+# build-gptr: tidy
+# 	@go build -o bin/gptr ./gptr/...

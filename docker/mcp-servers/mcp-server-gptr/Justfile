@@ -1,0 +1,9 @@
+#!/usr/bin/env -S just --justfile
+
+default:
+    @just --list
+
+build:
+    docker build -t mcp/gptr .
+
+# bring 

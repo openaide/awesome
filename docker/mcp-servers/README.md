@@ -28,6 +28,29 @@ https://packaging.python.org/en/latest/overview/
 https://github.com/nickclyde/duckduckgo-mcp-server.git
 https://github.com/QuantGeekDev/docker-mcp
 
+```bash
+uvx create-mcp-server
+# mcp-server-gptr
+cd mcp-server-gptr
+uv sync --dev --all-extras
+# uv run mcp-server-gptr
+# uv build
+#npx @modelcontextprotocol/inspector uv --directory $HOME/openaide/awesome/docker/mcp-servers/local/mcp-server-gptr run mcp-server-gptr
+docker build -t mcp/gptr .
+
+```
+
+```json
+{
+  "mcpServers": {
+    "gptr": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/gptr"]
+    }
+  }
+}
+```
+
 ## Typescript
 
 https://github.com/Ozamatash/deep-research-mcp

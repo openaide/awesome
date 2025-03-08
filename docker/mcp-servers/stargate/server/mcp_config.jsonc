@@ -6,12 +6,48 @@
     },
     "docker": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "-v", "/var/run/docker.sock:/var/run/docker.sock:ro", "mcp/docker"]
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock:ro",
+        "mcp/docker"
+      ]
     },
-    // "gptr": {
-    //   "command": "docker",
-    //   "args": ["run", "-i", "--rm", "mcp/gtpr"]
-    // },
+    "gptr": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e", "OPENAI_API_BASE",
+        "-e", "OPENAI_API_KEY",
+        "-e", "RETRIEVER",
+        "-e", "EMBEDDING",
+        "-e", "FAST_LLM",
+        "-e", "SMART_LLM",
+        "-e", "STRATEGIC_LLM",
+        "-e", "CURATE_SOURCES",
+        "-e", "REPORT_FORMAT",
+        "-e", "DOC_PATH",
+        "-e", "SCRAPER",
+        "mcp/gptr"
+      ],
+      "env": {
+        "OPENAI_API_BASE": "${AI_BASE_URL}",
+        "OPENAI_API_KEY": "${AI_API_KEY}",
+        "RETRIEVER": "duckduckgo",
+        "EMBEDDING": "openai:text-embedding-3-small",
+        "FAST_LLM": "openai:gpt-4o-mini",
+        "SMART_LLM": "openai:gpt-4o",
+        "STRATEGIC_LLM": "openai:o1-preview",
+        "CURATE_SOURCES": true,
+        "REPORT_FORMAT": "IEEE",
+        "DOC_PATH": "",
+        "SCRAPER": "bs"
+      }
+    },
     // "fetch": {
     //   "command": "docker",
     //   "args": ["run", "-i", "--rm", "mcp/fetch"]
@@ -68,10 +104,10 @@
     // "postgres": {
     //   "command": "docker",
     //   "args": [
-    //     "run", 
-    //     "-i", 
-    //     "--rm", 
-    //     "mcp/postgres", 
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "mcp/postgres",
     //     "postgresql://${AI_SQL_DB_USERNAME}:${AI_SQL_DB_PASSWORD}@host.docker.internal:5432/${AI_SQL_DB_NAME:-postgres}"]
     // },
     // "memory": {
@@ -81,10 +117,10 @@
     // "redis": {
     //   "command": "docker",
     //   "args": [
-    //     "run", 
-    //     "-i", 
-    //     "--rm", 
-    //     "mcp/redis", 
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "mcp/redis",
     //     "redis://host.docker.internal:6379"]
     // },
     "time": {

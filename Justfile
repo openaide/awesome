@@ -36,7 +36,7 @@ git-amend: git-message
 
 # Build MCP servers - stargate
 mcp-build:
-    cd docker/mcp-servers/stargate && docker buildx bake --progress=plain --file ./compose.override.yml stargate
+    cd docker/mcp-servers/stargate && docker buildx bake --progress=plain --file ./compose.yml --file ./compose.override.yml stargate
 
 # start the MCP servers - stargate
 mcp-up:

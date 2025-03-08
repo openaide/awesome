@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/mark3labs/mcp-go/client"
@@ -28,8 +30,10 @@ type McpConfig struct {
 }
 
 type McpServerConfig struct {
-	Command string   `json:"command"`
-	Args    []string `json:"args"`
+	Server  string         `json:"-"`
+	Command string         `json:"command"`
+	Args    []string       `json:"args"`
+	Env     map[string]any `json:"env"`
 }
 
 type ToolFunc struct {
@@ -62,6 +66,11 @@ func (c *McpConfig) Load(data []byte) error {
 	if err != nil {
 		return fmt.Errorf("unmarshal mcp config: %v", err)
 	}
+
+	// set server name for each config
+	for k, v := range c.ServerConfigs {
+		v.Server = k
+	}
 	return nil
 }
 
@@ -72,7 +81,43 @@ type McpClientSession struct {
 }
 
 func (r *McpClientSession) Connect(ctx context.Context) error {
-	env := os.Environ()
+	envMap := make(map[string]string)
+	// default /config/<server>.env
+	root := os.Getenv("MCP_ROOT")
+	b, err := os.ReadFile(filepath.Join(root, fmt.Sprintf("/config/%s.env", r.cfg.Server)))
+	if err == nil {
+		ex := expandWithDefault(string(b))
+		for _, v := range strings.Split(ex, "\n") {
+			v = strings.TrimSpace(v)
+			if v == "" {
+				continue
+			}
+			// skip comment
+			if strings.HasPrefix(v, "#") {
+				continue
+			}
+			// key=value
+			parts := strings.SplitN(v, "=", 2)
+			if len(parts) == 2 {
+				envMap[parts[0]] = parts[1]
+			}
+		}
+	}
+	// custom
+	for k, v := range r.cfg.Env {
+		if v != nil {
+			envMap[k] = fmt.Sprintf("%v", v)
+		}
+	}
+	env := make([]string, 0)
+	for k, v := range envMap {
+		if v != "" {
+			env = append(env, fmt.Sprintf("%s=%s", k, v))
+		}
+	}
+
+	log.Printf("Connecting to %s: %s %v\n", r.cfg.Server, r.cfg.Command, r.cfg.Args)
+
 	client, err := client.NewStdioMCPClient(
 		r.cfg.Command,
 		env,

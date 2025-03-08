@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "ddg": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/ddg"]
+    },
+    "docker": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-v", "/var/run/docker.sock:/var/run/docker.sock:ro", "mcp/docker"]
+    },
+    "gptr": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e", "OPENAI_API_BASE",
+        "-e", "OPENAI_API_KEY",
+        "mcp/gptr"
+      ],
+      "env": {
+        "OPENAI_API_BASE": "http://localhost:4000/",
+        "OPENAI_API_KEY": "sk-1234"
+      }
+    },
+    "time": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/time"]
+    }
+  }
+}

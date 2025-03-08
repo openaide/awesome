@@ -89,7 +89,7 @@ func TestServer(t *testing.T) {
 			name:     "Search on DuckDuckGo",
 			toolName: "ddg__search",
 			arguments: map[string]interface{}{
-				"query": "weather in sfo ca",
+				"query":       "weather in sfo ca",
 				"max_results": 1,
 			},
 			wantResult: true,

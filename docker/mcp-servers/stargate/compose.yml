@@ -11,6 +11,11 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/config/:/config/
+    environment:
+      - AI_BASE_URL=${AI_BASE_URL:-http://host.docker.internal:4000}
+      - AI_API_KEY=${AI_API_KEY:-sk-1234}
+      - MCP_ROOT=${MCP_ROOT:-/}
     networks:
       - openland
     pull_policy: never
