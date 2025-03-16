@@ -50,4 +50,6 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=builder /stargate /stargate
 
-CMD [ "/stargate" ]
+EXPOSE 58080
+
+CMD [ "/stargate", "serve", "--port", "58080" ]

@@ -7,7 +7,7 @@ services:
     container_name: "stargate"
     image: openaide/stargate
     ports:
-      - "${MCP_PORT:-58080}:58080"
+      - "${AI_MCP_PORT:-58080}:58080"
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -15,7 +15,6 @@ services:
     environment:
       - AI_BASE_URL=${AI_BASE_URL:-http://host.docker.internal:4000}
       - AI_API_KEY=${AI_API_KEY:-sk-1234}
-      - MCP_ROOT=${MCP_ROOT:-/}
     networks:
       - openland
     pull_policy: never
