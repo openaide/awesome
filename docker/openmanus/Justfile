@@ -1,0 +1,28 @@
+#!/usr/bin/env -S just --justfile
+
+# Variables
+APP_VERSION := "main"
+APP_REPO_URL := "https://github.com/mannaandpoem/OpenManus.git"
+TARGET_DIR := "local/OpenManus"
+
+default:
+	@just --list
+
+#
+clone:
+	@if [ ! -d {{TARGET_DIR}} ]; then \
+		echo "Cloning repository..."; \
+		git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}}; \
+	else \
+		echo "Directory exists."; \
+	fi;
+
+checkout:
+	@cd {{TARGET_DIR}} && \
+	git fetch origin && \
+	git stash && \
+	git checkout {{APP_VERSION}}
+
+
+setup:
+	@setup.sh

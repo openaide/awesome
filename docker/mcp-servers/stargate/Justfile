@@ -27,6 +27,14 @@ docker-dev:
 	# docker run -v /var/run/docker.sock:/var/run/docker.sock --rm -it mcp/stargate bash
 	docker compose run --rm stargate bash
 
-docker-serve:
-	# docker run -v /var/run/docker.sock:/var/run/docker.sock -p 58080:58080 --rm -it mcp/stargate /stargate
+# docker-serve:
+# 	# docker run -v /var/run/docker.sock:/var/run/docker.sock -p 58080:58080 --rm -it mcp/stargate /stargate
+# 	docker compose up -d
+
+# start the MCP servers - stargate
+docker-up:
 	docker compose up -d
+
+# stop the MCP servers - stargate
+docker-down:
+    docker compose down

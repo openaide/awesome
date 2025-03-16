@@ -45,3 +45,11 @@ mcp-up:
 # stop the MCP servers - stargate
 mcp-down:
     cd docker/mcp-servers/stargate && docker compose down
+
+# start SearxNG
+searx-up:
+	cd docker/gpt-researcher && docker compose -f compose.searxng.yml up -d
+
+# stop SearxNG
+searx-down:
+	cd docker/gpt-researcher && docker compose -f compose.searxng.yml down

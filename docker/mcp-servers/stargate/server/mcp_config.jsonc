@@ -4,17 +4,17 @@
       "command": "docker",
       "args": ["run", "-i", "--rm", "mcp/ddg"]
     },
-    "docker": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "-v",
-        "/var/run/docker.sock:/var/run/docker.sock:ro",
-        "mcp/docker"
-      ]
-    },
+    // "docker": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "-v",
+    //     "/var/run/docker.sock:/var/run/docker.sock:ro",
+    //     "mcp/docker"
+    //   ]
+    // },
     "gptr": {
       "command": "docker",
       "args": [
@@ -24,6 +24,8 @@
         "-e", "OPENAI_API_BASE",
         "-e", "OPENAI_API_KEY",
         "-e", "RETRIEVER",
+        "-e", "SEARX_URL",
+        "-e", "RETRIEVER_ENDPOINT",
         "-e", "EMBEDDING",
         "-e", "FAST_LLM",
         "-e", "SMART_LLM",
@@ -37,15 +39,17 @@
       "env": {
         "OPENAI_API_BASE": "${AI_BASE_URL}",
         "OPENAI_API_KEY": "${AI_API_KEY}",
-        "RETRIEVER": "duckduckgo",
+        // "RETRIEVER": "duckduckgo",
+        // "SCRAPER": "bs",
+        "RETRIEVER": "searx",
+        "SCRAPER": "browser",
         "EMBEDDING": "openai:text-embedding-3-small",
         "FAST_LLM": "openai:gpt-4o-mini",
         "SMART_LLM": "openai:gpt-4o",
         "STRATEGIC_LLM": "openai:o1-preview",
         "CURATE_SOURCES": true,
         "REPORT_FORMAT": "IEEE",
-        "DOC_PATH": "",
-        "SCRAPER": "bs"
+        "DOC_PATH": ""
       }
     },
     // "fetch": {

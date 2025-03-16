@@ -47,14 +47,14 @@ checkout:
 setup:
 	@setup.sh
 
-# searxng: start-searxng
-# 	@echo "SearxNG started"
+searxng: start-searxng
+	@echo "SearxNG started"
 
-# start-searxng:
-# 	@docker compose -f compose.searxng.yml up -d
+start-searxng:
+	@docker compose -f compose.searxng.yml up -d
 
-# stop-searxng:
-# 	@docker compose -f compose.searxng.yml down
+stop-searxng:
+	@docker compose -f compose.searxng.yml down
 
 # test: searxng
 # 	@test.sh
