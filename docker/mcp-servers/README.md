@@ -28,6 +28,10 @@ https://packaging.python.org/en/latest/overview/
 https://github.com/nickclyde/duckduckgo-mcp-server.git
 https://github.com/QuantGeekDev/docker-mcp
 
+https://github.com/webcoderz/MCP-Geo
+https://github.com/briandconnelly/mcp-server-ipinfo
+
+
 ```bash
 uvx create-mcp-server
 # mcp-server-gptr
@@ -56,6 +60,7 @@ docker build -t mcp/gptr .
 https://github.com/Ozamatash/deep-research-mcp
 https://github.com/shaike1/mcp-server-ssh
 https://github.com/Claw256/mcp-web-search
+https://github.com/pskill9/web-search
 
 ## Misc
 

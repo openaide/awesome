@@ -4,6 +4,20 @@
       "command": "docker",
       "args": ["run", "-i", "--rm", "mcp/ddg"]
     },
+    "searxng": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "SEARXNG_URL",
+        "mcp/searxng"
+      ],
+      "env": {
+        "SEARXNG_URL": "http://host.docker.internal:48080/"
+      }
+    },
     // "docker": {
     //   "command": "docker",
     //   "args": [

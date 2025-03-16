@@ -173,6 +173,7 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [Magentic-One](https://github.com/microsoft/autogen/tree/main/python/packages/autogen-magentic-one)
 * [AutoAgent](https://github.com/HKUDS/AutoAgent)
 * [OpenManus](https://github.com/mannaandpoem/OpenManus)
+* [Browser-Use](https://github.com/browser-use/browser-use)
 
 ### Dependencies (optional)
 

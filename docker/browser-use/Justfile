@@ -1,0 +1,29 @@
+#!/usr/bin/env -S just --justfile
+
+default:
+    @just --list
+
+# Variables
+APP_VERSION := "main"
+APP_REPO_URL := "https://github.com/browser-use/browser-use.git"
+TARGET_DIR := "local/browser-use"
+
+# 
+clone:
+	@if [ ! -d {{TARGET_DIR}} ]; then \
+		echo "Cloning repository..."; \
+		git clone {{APP_REPO_URL}} {{TARGET_DIR}}; \
+	else \
+		echo "Directory exists."; \
+	fi;
+
+checkout:
+	@cd {{TARGET_DIR}} && \
+	git fetch origin && \
+	git stash && \
+	git checkout {{APP_VERSION}}
+
+build:
+    docker build -t openaide/browser-use .
+
+#

@@ -53,6 +53,9 @@ clone-ddg-mcp-server:
 clone-mcp-filesystem-server:
     git clone --branch main https://github.com/mark3labs/mcp-filesystem-server.git local/mcp-filesystem-server || echo "Already cloned"
 
+clone-mcp-searxng:
+    git clone --branch master https://github.com/SecretiveShell/MCP-searxng.git local/mcp-searxng || echo "Already cloned"
+
 ##
 
 build-redis:
@@ -86,15 +89,26 @@ build-time:
     cd local/servers/src/time && docker build -t mcp/time -f Dockerfile .
 
 build-ddg:
-    cp ddg/Dockerfile local/ddg-mcp-server/Dockerfile
+    cp mcp-ddg/Dockerfile local/ddg-mcp-server/Dockerfile
     cd local/ddg-mcp-server && docker build -t mcp/ddg -f Dockerfile .
 
 build-docker:
     cp docker/Dockerfile local/docker-mcp/Dockerfile
     cd local/docker-mcp && docker build -t mcp/docker -f Dockerfile .
 
-# Build
-build: build-time build-ddg build-docker
+build-searxng:
+    cp mcp-searxng/Dockerfile local/mcp-searxng/Dockerfile
+    cd local/mcp-searxng && docker build -t mcp/searxng -f Dockerfile .
+
+
+# build stargate
+build-stargate:
+    cd stargate && docker compose build
+
+# Build stargate and supported MCP servers
+build: build-mcp build-stargate
+
+build-mcp: build-time build-ddg build-searxng
 
 # Run MCP chatbot
 run-chatbot:
@@ -103,6 +117,17 @@ run-chatbot:
 # Run docker
 docker-dev image:
     docker run --pull never  -v /var/run/docker.sock:/var/run/docker.sock --rm -it {{image}} bash
+
+##
+# Start stargate and the MCP servers
+up:
+    cd stargate && docker compose up -d
+
+down:
+    cd stargate && docker compose down
+
+# Build stop and restart the MCP servers
+start: build down up
 
 ##
 
