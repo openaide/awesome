@@ -508,19 +508,18 @@ func (s *MCPServer) handleListTools(
 	if err != nil {
 		return createErrorResponse(id, mcp.INTERNAL_ERROR, err.Error())
 	}
+
+	// update names to include server name
+	// format: serverName__toolName
 	for serverName, funcs := range funcMap {
-		for _, v := range funcs {
+		for _, v := range funcs.Tools {
 			name := fmt.Sprintf("%s__%s", serverName, v.Name)
-			params := v.Parameters
 			tool := mcp.Tool{
 				Name:        name,
 				Description: v.Description,
-				InputSchema: mcp.ToolInputSchema{
-					Type:       params["type"].(string),
-					Properties: params["properties"].(map[string]any),
-					Required:   params["required"].([]string),
-				},
+				InputSchema: v.InputSchema,
 			}
+
 			tools = append(tools, tool)
 		}
 	}
@@ -550,18 +549,9 @@ func (s *MCPServer) handleToolCall(
 		)
 	}
 
-	resp, err := s.proxy.CallTool(parts[0], parts[1], request.Params.Arguments)
+	result, err := s.proxy.CallTool(ctx, parts[0], parts[1], request.Params.Arguments)
 	if err != nil {
 		return createErrorResponse(id, mcp.INTERNAL_ERROR, err.Error())
-	}
-
-	result := &mcp.CallToolResult{
-		Content: []any{
-			mcp.TextContent{
-				Type: "text",
-				Text: fmt.Sprintf("Echo: %s", resp),
-			},
-		},
 	}
 
 	return createResponse(id, result)
