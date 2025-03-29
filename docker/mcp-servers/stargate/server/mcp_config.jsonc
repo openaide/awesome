@@ -22,6 +22,38 @@
         "mcp/fetcher"
       ]
     },
+    // "browser-use": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "-e",
+    //     "OPENAI_API_KEY",
+    //     "-e",
+    //     "OPENAI_API_BASE",
+    //     "-e",
+    //     "PATIENT",
+    //     "-e",
+    //     "CHROME_PATH",
+    //     "mcp/browser-use"
+    //   ],
+    //   "env": {
+    //     "OPENAI_API_BASE": "${AI_BASE_URL}",
+    //     "OPENAI_API_KEY": "${AI_API_KEY}",
+    //     "PATIENT": true,
+    //     "CHROME_PATH": ""
+    //   }
+    // },
+    "playwright": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/playwright"
+      ]
+    },
     "puppeteer": {
       "command": "docker",
       "args": [

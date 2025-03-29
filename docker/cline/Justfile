@@ -1,0 +1,50 @@
+#!/usr/bin/env -S just --justfile
+
+set shell := ["bash", "-c"]
+
+default:
+    @just --list
+
+# Variables
+APP_VERSION := "v3.8.4"
+APP_REPO_URL := "https://github.com/cline/cline.git"
+TARGET_DIR := "local/cline"
+PATCH := "$(echo $PWD/src.patch)"
+TIMESTAMP := `date +'%Y-%m-%d %H:%M:%S'`
+# OS := `uname`
+# ARCH := `uname -m`
+
+VSCE_TARGET := "$(uname | tr '[:upper:]' '[:lower:]')-$(uname -m)"                        
+
+
+# Info
+info:
+	@echo "VSCE_TARGET: {{VSCE_TARGET}}"
+	@echo "APP_REPO_URL: {{APP_REPO_URL}}"
+	@echo "APP_VERSION: {{APP_VERSION}}"
+	@echo "TARGET_DIR: {{TARGET_DIR}}"
+	@echo "PATCH: {{PATCH}}"
+	@echo "VSCode Extension: ./local/extension"
+
+clone:
+	git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}} || echo "Directory exists."
+
+checkout:
+    @if [ -d "{{TARGET_DIR}}" ]; then \
+        cd {{TARGET_DIR}} && git fetch && git checkout {{APP_VERSION}}; \
+    else \
+        echo "Directory {{TARGET_DIR}} does not exist. Please clone first."; \
+    fi
+
+# patch:
+# 	cd {{TARGET_DIR}} && git reset --hard && git apply {{PATCH}}
+# 	sed "s/\[\[BUILD_TIMESTAMP\]\]/{{TIMESTAMP}}/g" {{TARGET_DIR}}/webview-ui/src/components/chat/ChatView.tsx > local/ChatView.tsx && \
+# 	mv local/ChatView.tsx {{TARGET_DIR}}/webview-ui/src/components/chat/ChatView.tsx
+
+build: clone checkout vsce
+
+vsce: clean
+	docker buildx build --build-arg VSCE_TARGET={{VSCE_TARGET}} --progress plain --target vsce --output type=local,dest=./local/extension --file ./Dockerfile {{TARGET_DIR}}
+
+clean:
+	rm -rf ./local/extension

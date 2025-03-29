@@ -1,0 +1,53 @@
+#!/usr/bin/env -S just --justfile
+
+set shell := ["bash", "-c"]
+
+# Help recipe
+default:
+    @just --list
+
+# Variables
+# APP_VERSION := "main"
+APP_VERSION := "0.30.1"
+APP_REPO_URL := "https://github.com/All-Hands-AI/OpenHands.git"
+TARGET_DIR := "local/openhands"
+
+# Info 
+info:
+    @echo "APP_REPO_URL: {{APP_REPO_URL}}"
+    @echo "APP_VERSION: {{APP_VERSION}}"
+    @echo "TARGET_DIR: {{TARGET_DIR}}"
+
+#
+clone:
+    @if [ ! -d "{{TARGET_DIR}}" ]; then \
+        echo "Cloning repository..."; \
+        git clone --branch "{{APP_VERSION}}" "{{APP_REPO_URL}}" "{{TARGET_DIR}}"; \
+    else \
+        echo "Directory exists."; \
+    fi
+
+checkout:
+    @cd "{{TARGET_DIR}}" && git stash && git fetch && git checkout "{{APP_VERSION}}"
+
+build: clone checkout
+    @docker compose build
+
+up: net
+    @docker compose up -d
+
+down:
+    @docker compose down
+
+net:
+    @docker network inspect openland > /dev/null 2>&1 || docker network create openland
+    
+cli:
+    @echo "Building openhands cli with docker..."
+    @cd cli && ./build.sh
+
+clean:
+    @rm -rf cli/dist/*
+
+setup:
+    @./setup.sh

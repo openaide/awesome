@@ -28,6 +28,9 @@ https://github.com/Automata-Labs-team/code-sandbox-mcp
 
 ## Python
 
+https://github.com/rusiaaman/wcgw
+https://github.com/co-browser/browser-use-mcp-server
+
 https://docs.astral.sh/uv/
 https://hatch.pypa.io/latest/
 https://packaging.python.org/en/latest/overview/
@@ -62,16 +65,14 @@ docker build -t mcp/gptr .
 }
 ```
 
-## Browser
-
-https://github.com/executeautomation/mcp-playwright
-
 ## Typescript
+
+https://github.com/jae-jae/fetcher-mcp
+https://github.com/jae-jae/g-search-mcp/blob/main/README.md
+https://github.com/executeautomation/mcp-playwright
 
 https://github.com/Ozamatash/deep-research-mcp
 https://github.com/shaike1/mcp-server-ssh
-https://github.com/Claw256/mcp-web-search
-https://github.com/pskill9/web-search
 
 ## Misc
 
@@ -108,3 +109,5 @@ https://github.com/spences10/mcp-duckduckgo-search
 https://github.com/ckreiling/mcp-server-docker
 https://github.com/mamertofabian/mcp-everything-search
 https://github.com/mzxrai/mcp-webresearch
+https://github.com/pskill9/web-search
+https://github.com/Claw256/mcp-web-search

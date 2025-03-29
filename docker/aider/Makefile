@@ -10,6 +10,7 @@ help: Makefile
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ##
+# v0.80.0
 APP_VERSION ?= main
 APP_REPO_URL ?= https://github.com/Aider-AI/aider.git
 TARGET_DIR = local/aider

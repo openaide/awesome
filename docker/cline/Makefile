@@ -11,7 +11,7 @@ help: Makefile
 
 ##
 APP_VERSION ?= main
-# APP_VERSION ?= v2.1.0
+# APP_VERSION ?= v3.8.4
 APP_REPO_URL ?= https://github.com/cline/cline.git
 TARGET_DIR = local/cline
 

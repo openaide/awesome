@@ -1,0 +1,44 @@
+#!/usr/bin/env -S just --justfile
+
+set shell := ["bash", "-c"]
+
+default:
+    @just --list
+
+# Variables
+APP_VERSION := "v1.1.17-vscode"
+APP_REPO_URL := "https://github.com/continuedev/continue.git"
+TARGET_DIR := "local/continue"
+
+VSCE_TARGET := "$(uname | tr '[:upper:]' '[:lower:]')-$(uname -m)"                        
+
+# Info 
+info:
+    @echo "VSCE_TARGET: {{VSCE_TARGET}}"
+    @echo "APP_REPO_URL: {{APP_REPO_URL}}"
+    @echo "APP_VERSION: {{APP_VERSION}}"
+    @echo "TARGET_DIR: {{TARGET_DIR}}"
+
+# Clone
+clone:
+    git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}} || echo "Directory exists."
+
+checkout:
+    @if [ -d "{{TARGET_DIR}}" ]; then \
+        cd {{TARGET_DIR}} && git fetch && git checkout {{APP_VERSION}}; \
+    else \
+        echo "Directory {{TARGET_DIR}} does not exist. Please clone first."; \
+    fi
+
+vsce: clone clean
+    @docker buildx build --build-arg VSCE_TARGET={{VSCE_TARGET}} --progress plain --target vsce --output type=local,dest=./local/extension --file ./Dockerfile {{TARGET_DIR}}
+
+# Build
+build: vsce
+
+clean:
+    @rm -rf ./local/extension
+
+# Build continue vscode extension on host
+build-local: 
+    @./build.sh

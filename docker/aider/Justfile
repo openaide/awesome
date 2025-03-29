@@ -1,0 +1,52 @@
+#!/usr/bin/env -S just --justfile
+
+set shell := ["bash", "-c"]
+
+# Help recipe
+default:
+    @just --list
+
+# Variables
+# APP_VERSION := "main"
+APP_VERSION := "v0.80.0"
+APP_REPO_URL := "https://github.com/Aider-AI/aider.git"
+TARGET_DIR := "local/aider"
+
+
+# Clone recipe
+clone:
+    @if [ ! -d {{TARGET_DIR}} ]; then \
+        echo "Cloning repository..."; \
+        git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}}; \
+    else \
+        echo "Directory exists."; \
+    fi
+
+# Checkout recipe
+checkout:
+    @cd {{TARGET_DIR}} && \
+    git fetch && \
+    git checkout {{APP_VERSION}} && \
+    git stash && \
+    git pull origin {{APP_VERSION}}
+
+# Build recipe
+build: clone checkout
+    @docker compose --profile base build aider-base
+    @docker compose build
+
+# Up recipe
+up: net
+    @docker compose up -d
+
+# Down recipe
+down:
+    @docker compose down
+
+# Net recipe
+net:
+    @docker network inspect openland >/dev/null 2>&1 || docker network create openland
+
+# Setup recipe
+setup:
+    @./setup.sh
