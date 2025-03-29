@@ -6,16 +6,23 @@ https://modelcontextprotocol.io/introduction
 https://github.com/modelcontextprotocol/servers
 https://github.com/modelcontextprotocol/create-python-server
 
+
+https://github.com/rusiaaman/wcgw/blob/main/README.md
+
 ## MCP Chatbot
 
 https://github.com/3choff/mcp-chatbot
 
 ## Go
 
+https://github.com/nguyenvanduocit/all-in-one-model-context-protocol?tab=readme-ov-file
+
 https://github.com/strowk/mcp-k8s-go
 https://github.com/manusa/kubernetes-mcp-server
 https://github.com/mark3labs/mcp-go
+
 https://github.com/mark3labs/mcp-filesystem-server
+
 https://github.com/metoro-io/mcp-golang
 https://github.com/Automata-Labs-team/code-sandbox-mcp
 
@@ -54,6 +61,10 @@ docker build -t mcp/gptr .
   }
 }
 ```
+
+## Browser
+
+https://github.com/executeautomation/mcp-playwright
 
 ## Typescript
 

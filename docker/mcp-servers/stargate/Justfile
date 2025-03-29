@@ -38,3 +38,10 @@ docker-up:
 # stop the MCP servers - stargate
 docker-down:
     docker compose down
+
+# Build and start stargate and all MCP servers
+start:
+	@echo "Restarting stargate and all MCP servers..."
+	@docker compose build
+	@docker compose down
+	@docker compose up -d

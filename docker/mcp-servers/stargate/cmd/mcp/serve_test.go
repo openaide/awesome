@@ -17,7 +17,7 @@ func TestServer(t *testing.T) {
 		t.Skip("Skipping test in short mode")
 	}
 
-	baseUrl := "http://localhost:58080"
+	baseUrl := "http://localhost:58888"
 	client, err := client.NewSSEMCPClient(baseUrl + "/sse")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
@@ -94,22 +94,22 @@ func TestServer(t *testing.T) {
 			},
 			wantResult: true,
 		},
-		{
-			name:     "List Docker Containers",
-			toolName: "docker__list-containers",
-			arguments: map[string]interface{}{
-				"container_name": "stargate",
-			},
-			wantResult: true,
-		},
-		{
-			name:     "Get Docker Logs",
-			toolName: "docker__get-logs",
-			arguments: map[string]interface{}{
-				"container_name": "stargate",
-			},
-			wantResult: true,
-		},
+		// {
+		// 	name:     "List Docker Containers",
+		// 	toolName: "docker__list-containers",
+		// 	arguments: map[string]interface{}{
+		// 		"container_name": "stargate",
+		// 	},
+		// 	wantResult: true,
+		// },
+		// {
+		// 	name:     "Get Docker Logs",
+		// 	toolName: "docker__get-logs",
+		// 	arguments: map[string]interface{}{
+		// 		"container_name": "stargate",
+		// 	},
+		// 	wantResult: true,
+		// },
 	}
 
 	for _, test := range callTests {

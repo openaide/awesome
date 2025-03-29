@@ -56,6 +56,16 @@ clone-mcp-filesystem-server:
 clone-mcp-searxng:
     git clone --branch master https://github.com/SecretiveShell/MCP-searxng.git local/mcp-searxng || echo "Already cloned"
 
+# clone-mcp-google:
+#     git clone --branch main https://github.com/pskill9/web-search.git local/mcp-google || echo "Already cloned"
+# clone-mcp-google:
+#     git clone --branch master https://github.com/IonicaBizau/puppeteer-search-scraper.git local/mcp-google || echo "Already cloned"
+clone-mcp-google:
+    git clone --branch main https://github.com/jae-jae/g-search-mcp.git local/mcp-google || echo "Already cloned"
+
+clone-fetcher-mcp:
+    git clone --branch main https://github.com/jae-jae/fetcher-mcp.git local/fetcher-mcp || echo "Already cloned"
+
 ##
 
 build-redis:
@@ -100,6 +110,17 @@ build-searxng:
     cp mcp-searxng/Dockerfile local/mcp-searxng/Dockerfile
     cd local/mcp-searxng && docker build -t mcp/searxng -f Dockerfile .
 
+build-google:
+    cp mcp-google/Dockerfile local/mcp-google/Dockerfile
+    cd local/mcp-google && docker build -t mcp/google -f Dockerfile .
+
+build-puppeteer:
+    cd local/servers && docker build -t mcp/puppeteer -f src/puppeteer/Dockerfile .
+
+build-fetcher:
+    cp mcp-fetcher/Dockerfile local/fetcher-mcp/Dockerfile
+    cd local/fetcher-mcp && docker build -t mcp/fetcher -f Dockerfile .
+
 
 # build stargate
 build-stargate:
@@ -123,6 +144,7 @@ docker-dev image:
 up:
     cd stargate && docker compose up -d
 
+# Stop stargate
 down:
     cd stargate && docker compose down
 

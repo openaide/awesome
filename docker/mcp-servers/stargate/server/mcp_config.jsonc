@@ -1,19 +1,42 @@
 {
   "mcpServers": {
-    "ddg": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "mcp/ddg"]
-    },
-    "searxng": {
+    // "ddg": {
+    //   "command": "docker",
+    //   "args": ["run", "-i", "--rm", "mcp/ddg"]
+    // },
+    "google": {
       "command": "docker",
       "args": [
         "run",
         "-i",
         "--rm",
+        "mcp/google"
+      ]
+    },
+    "fetcher": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/fetcher"
+      ]
+    },
+    "puppeteer": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--init",
         "-e",
-        "SEARXNG_URL",
-        "mcp/searxng"
-      ],
+        "DOCKER_CONTAINER=true",
+        "mcp/puppeteer"
+      ]
+    },
+    "searxng": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "SEARXNG_URL", "mcp/searxng"],
       "env": {
         "SEARXNG_URL": "http://host.docker.internal:48080/"
       }
@@ -35,19 +58,32 @@
         "run",
         "-i",
         "--rm",
-        "-e", "OPENAI_API_BASE",
-        "-e", "OPENAI_API_KEY",
-        "-e", "RETRIEVER",
-        "-e", "SEARX_URL",
-        "-e", "RETRIEVER_ENDPOINT",
-        "-e", "EMBEDDING",
-        "-e", "FAST_LLM",
-        "-e", "SMART_LLM",
-        "-e", "STRATEGIC_LLM",
-        "-e", "CURATE_SOURCES",
-        "-e", "REPORT_FORMAT",
-        "-e", "DOC_PATH",
-        "-e", "SCRAPER",
+        "-e",
+        "OPENAI_API_BASE",
+        "-e",
+        "OPENAI_API_KEY",
+        "-e",
+        "RETRIEVER",
+        "-e",
+        "SEARX_URL",
+        "-e",
+        "RETRIEVER_ENDPOINT",
+        "-e",
+        "EMBEDDING",
+        "-e",
+        "FAST_LLM",
+        "-e",
+        "SMART_LLM",
+        "-e",
+        "STRATEGIC_LLM",
+        "-e",
+        "CURATE_SOURCES",
+        "-e",
+        "REPORT_FORMAT",
+        "-e",
+        "DOC_PATH",
+        "-e",
+        "SCRAPER",
         "mcp/gptr"
       ],
       "env": {
@@ -66,10 +102,10 @@
         "DOC_PATH": ""
       }
     },
-    // "fetch": {
-    //   "command": "docker",
-    //   "args": ["run", "-i", "--rm", "mcp/fetch"]
-    // },
+    "fetch": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/fetch"]
+    },
     // "filesystem": {
     //   "command": "docker",
     //   "args": [
