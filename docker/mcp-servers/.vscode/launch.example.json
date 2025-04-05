@@ -10,11 +10,14 @@
 			"request": "launch",
 			"mode": "auto",
 			"program": "${workspaceFolder}/stargate/",
-			"args": [],
+			"args": [
+				"serve"
+			],
 			"env": {
 				"AI_BASE_URL": "http://host.docker.internal:4000",
 				"AI_API_KEY": "sk-1234",
 				"AI_MCP_PORT": "58082",
+				"AI_GH_TOKEN": "${env:AI_GH_TOKEN}"
 			},
 			"cwd": "${workspaceFolder}/stargate/",
 		}

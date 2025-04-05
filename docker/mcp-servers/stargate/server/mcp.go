@@ -48,27 +48,27 @@ func NewMcpConfig() *McpConfig {
 	}
 }
 
-func (c *McpConfig) LoadFile(filename string) error {
+func (r *McpConfig) LoadFile(filename string) error {
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		return err
 	}
-	return c.Load(data)
+	return r.Load(data)
 }
 
-func (c *McpConfig) Load(data []byte) error {
+func (r *McpConfig) Load(data []byte) error {
 	hu, err := hujson.Standardize(data)
 	if err != nil {
 		return err
 	}
 	ex := expandWithDefault(string(hu))
-	err = json.Unmarshal([]byte(ex), &c)
+	err = json.Unmarshal([]byte(ex), r)
 	if err != nil {
 		return fmt.Errorf("unmarshal mcp config: %v", err)
 	}
 
 	// set server name for each config
-	for k, v := range c.ServerConfigs {
+	for k, v := range r.ServerConfigs {
 		v.Server = k
 	}
 	return nil

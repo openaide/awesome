@@ -72,6 +72,8 @@ clone-mcp-playwright:
 clone-mcp-browser-use:
     git clone --branch main https://github.com/co-browser/browser-use-mcp-server.git local/mcp-browser-use || echo "Already cloned"
 
+clone-github-mcp-server:
+    git clone --branch main https://github.com/github/github-mcp-server.git local/github-mcp-server || echo "Already cloned"
 
 ##
 
@@ -134,6 +136,9 @@ build-playwright:
 
 build-browser-use:
     cd local/mcp-browser-use && docker build -t mcp/browser-use -f Dockerfile .
+
+build-github-mcp:
+    cd local/github-mcp-server && docker build -t mcp/github -f Dockerfile .
 
 ##
 # build stargate

@@ -159,6 +159,24 @@
     //     "mcp/git"
     //   ]
     // },
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "mcp/github",
+        "/server/github-mcp-server",
+        "--read-only",
+        "--enable-command-logging",
+        "stdio"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${AI_GH_TOKEN}"
+      }
+    },
     // "github": {
     //   "command": "docker",
     //   "args": [

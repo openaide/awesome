@@ -17,7 +17,7 @@ func TestServer(t *testing.T) {
 		t.Skip("Skipping test in short mode")
 	}
 
-	baseUrl := "http://localhost:58888"
+	baseUrl := "http://localhost:58080"
 	client, err := client.NewSSEMCPClient(baseUrl + "/sse")
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)

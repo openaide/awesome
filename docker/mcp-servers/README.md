@@ -7,6 +7,8 @@ https://github.com/modelcontextprotocol/servers
 https://github.com/modelcontextprotocol/create-python-server
 
 
+https://github.com/github/github-mcp-server
+
 https://github.com/rusiaaman/wcgw/blob/main/README.md
 
 ## MCP Chatbot
