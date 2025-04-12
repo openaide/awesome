@@ -1,0 +1,127 @@
+{
+  "mcpServers": {
+    "google": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/google"
+      ]
+    },
+    "fetcher": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/fetcher"
+      ]
+    },
+    // "playwright": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "mcp/playwright"
+    //   ]
+    // },
+    // "puppeteer": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "--init",
+    //     "-e",
+    //     "DOCKER_CONTAINER=true",
+    //     "mcp/puppeteer"
+    //   ]
+    // },
+    "searxng": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "SEARXNG_URL", "mcp/searxng"],
+      "env": {
+        "SEARXNG_URL": "http://host.docker.internal:48080/"
+      }
+    },
+    "gptr": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "OPENAI_API_BASE",
+        "-e",
+        "OPENAI_API_KEY",
+        "-e",
+        "RETRIEVER",
+        "-e",
+        "SEARX_URL",
+        "-e",
+        "RETRIEVER_ENDPOINT",
+        "-e",
+        "EMBEDDING",
+        "-e",
+        "FAST_LLM",
+        "-e",
+        "SMART_LLM",
+        "-e",
+        "STRATEGIC_LLM",
+        "-e",
+        "CURATE_SOURCES",
+        "-e",
+        "REPORT_FORMAT",
+        "-e",
+        "DOC_PATH",
+        "-e",
+        "SCRAPER",
+        "mcp/gptr"
+      ],
+      "env": {
+        "OPENAI_API_BASE": "${AI_BASE_URL}",
+        "OPENAI_API_KEY": "${AI_API_KEY}",
+        // "RETRIEVER": "duckduckgo",
+        // "SCRAPER": "bs",
+        "RETRIEVER": "searx",
+        "SCRAPER": "browser",
+        "EMBEDDING": "openai:text-embedding-3-small",
+        "FAST_LLM": "openai:gpt-4o-mini",
+        "SMART_LLM": "openai:gpt-4o",
+        "STRATEGIC_LLM": "openai:o1-preview",
+        "CURATE_SOURCES": true,
+        "REPORT_FORMAT": "IEEE",
+        "DOC_PATH": ""
+      }
+    },
+    "fetch": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/fetch"]
+    },
+    
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "mcp/github",
+        "/server/github-mcp-server",
+        "--read-only",
+        "--enable-command-logging",
+        "stdio"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${AI_GH_TOKEN}"
+      }
+    },
+    "time": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/time"]
+    }
+  }
+}

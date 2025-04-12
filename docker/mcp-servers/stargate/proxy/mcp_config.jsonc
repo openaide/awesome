@@ -1,9 +1,9 @@
 {
   "mcpServers": {
-    // "ddg": {
-    //   "command": "docker",
-    //   "args": ["run", "-i", "--rm", "mcp/ddg"]
-    // },
+    "ddg": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp/ddg"]
+    },
     "google": {
       "command": "docker",
       "args": [
@@ -73,17 +73,17 @@
         "SEARXNG_URL": "http://host.docker.internal:48080/"
       }
     },
-    // "docker": {
-    //   "command": "docker",
-    //   "args": [
-    //     "run",
-    //     "-i",
-    //     "--rm",
-    //     "-v",
-    //     "/var/run/docker.sock:/var/run/docker.sock:ro",
-    //     "mcp/docker"
-    //   ]
-    // },
+    "docker": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock:ro",
+        "mcp/docker"
+      ]
+    },
     "gptr": {
       "command": "docker",
       "args": [
@@ -177,20 +177,6 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${AI_GH_TOKEN}"
       }
     },
-    // "github": {
-    //   "command": "docker",
-    //   "args": [
-    //     "run",
-    //     "-i",
-    //     "--rm",
-    //     "-e",
-    //     "GITHUB_PERSONAL_ACCESS_TOKEN",
-    //     "mcp/github"
-    //   ],
-    //   "env": {
-    //     "GITHUB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>"
-    //   }
-    // },
     // "google-maps": {
     //   "command": "docker",
     //   "args": [

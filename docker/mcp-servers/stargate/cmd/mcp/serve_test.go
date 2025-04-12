@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"testing"
 	"time"
 
@@ -17,8 +18,13 @@ func TestServer(t *testing.T) {
 		t.Skip("Skipping test in short mode")
 	}
 
-	baseUrl := "http://localhost:58080"
-	client, err := client.NewSSEMCPClient(baseUrl + "/sse")
+	baseUrl := "http://localhost:58080/sse"
+	port := os.Getenv("AI_MCP_PORT")
+	if port != "" {
+		baseUrl = fmt.Sprintf("http://localhost:%s/sse", port)
+	}
+
+	client, err := client.NewSSEMCPClient(baseUrl)
 	if err != nil {
 		t.Fatalf("Failed to create client: %v", err)
 	}
@@ -85,15 +91,15 @@ func TestServer(t *testing.T) {
 			},
 			wantResult: true,
 		},
-		{
-			name:     "Search on DuckDuckGo",
-			toolName: "ddg__search",
-			arguments: map[string]interface{}{
-				"query":       "weather in sfo ca",
-				"max_results": 1,
-			},
-			wantResult: true,
-		},
+		// {
+		// 	name:     "Search on DuckDuckGo",
+		// 	toolName: "ddg__search",
+		// 	arguments: map[string]interface{}{
+		// 		"query":       "weather in sfo ca",
+		// 		"max_results": 1,
+		// 	},
+		// 	wantResult: true,
+		// },
 		// {
 		// 	name:     "List Docker Containers",
 		// 	toolName: "docker__list-containers",

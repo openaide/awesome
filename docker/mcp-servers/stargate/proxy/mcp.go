@@ -1,4 +1,4 @@
-package server
+package proxy
 
 import (
 	"context"
@@ -13,17 +13,12 @@ import (
 
 	"github.com/mark3labs/mcp-go/client"
 	"github.com/mark3labs/mcp-go/mcp"
+	"github.com/mark3labs/mcp-go/server"
 	"github.com/tailscale/hujson"
 )
 
 //go:embed mcp_config.jsonc
 var mcpConfigData []byte
-
-var mcpConfig = NewMcpConfig()
-
-func init() {
-	mcpConfig.Load(mcpConfigData)
-}
 
 type McpConfig struct {
 	ServerConfigs map[string]*McpServerConfig `json:"mcpServers"`
@@ -282,14 +277,80 @@ func (r *McpProxy) CallTool(ctx context.Context, server, tool string, args map[s
 	return nil, fmt.Errorf("no such server: %s", server)
 }
 
-// Initialize the MCP server proxy
-func (s *MCPServer) Initialize() error {
-	// default
-	config := mcpConfigData
-	var cfg = NewMcpConfig()
-	if err := cfg.Load(config); err != nil {
+type ProxyConfig struct {
+	Host string `json:"host"`
+	Port int    `json:"port"`
 
+	Config string `json:"config"`
+}
+
+func createProxy(cfg *ProxyConfig) (*McpProxy, error) {
+	var c = NewMcpConfig()
+
+	var err error
+	if cfg.Config != "" {
+		err = c.LoadFile(cfg.Config)
+	} else {
+		err = c.Load(mcpConfigData)
 	}
-	s.proxy = NewMcpProxy(cfg)
+	if err != nil {
+		return nil, fmt.Errorf("load mcp config: %v", err)
+	}
+	return NewMcpProxy(c), nil
+}
+
+func Serve(cfg *ProxyConfig) error {
+	ms := server.NewMCPServer(
+		"StarGate",
+		"1.0.0",
+		server.WithResourceCapabilities(false, false),
+		server.WithPromptCapabilities(false),
+		server.WithToolCapabilities(true),
+		server.WithLogging(),
+	)
+
+	proxy, err := createProxy(cfg)
+	if err != nil {
+		return err
+	}
+
+	result, err := proxy.ListTools()
+	if err != nil {
+		return err
+	}
+
+	newId := func(server, tool string) string {
+		return fmt.Sprintf("%s__%s", server, tool)
+	}
+
+	for server, v := range result {
+		log.Printf("Server: %s, Tools: %d\n", server, len(v.Tools))
+
+		for _, tool := range v.Tools {
+			id := newId(server, tool.Name)
+			log.Printf("Adding tool: %s,  Name %s, Description: %s\n", id, tool.Name, tool.Description)
+
+			ms.AddTool(mcp.Tool{
+				Name:        id,
+				Description: tool.Description,
+				InputSchema: tool.InputSchema,
+			}, func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+				log.Printf("Calling tool %s request: %q %+v\n", id, server, request)
+				return proxy.CallTool(ctx, server, tool.Name, request.Params.Arguments)
+			})
+		}
+	}
+
+	// start the server
+	baseURL := fmt.Sprintf("http://%s:%v/", cfg.Host, cfg.Port)
+	addr := fmt.Sprintf(":%v", cfg.Port)
+
+	sse := server.NewSSEServer(ms, server.WithBaseURL(baseURL))
+
+	log.Printf("SSE server listening: %s", addr)
+
+	if err := sse.Start(addr); err != nil {
+		return err
+	}
 	return nil
 }

@@ -8,6 +8,7 @@ services:
     image: openaide/stargate
     ports:
       - "${AI_MCP_PORT:-58080}:58080"
+    command: /stargate serve --port 58080 --config /config/mcp.jsonc
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

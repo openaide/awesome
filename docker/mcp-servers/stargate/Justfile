@@ -2,6 +2,10 @@
 
 set shell := ["bash", "-c"]
 
+AI_MCP_PORT := "58080"
+# AI_MCP_PORT := env_var('AI_MCP_PORT', '5082')
+
+
 default:
     @just --list
 
@@ -15,7 +19,12 @@ build: tidy
 	go build -o bin/stargate ./main.go
 
 run:
-	go run main.go serve --port 58081
+	go run main.go serve --port {{AI_MCP_PORT}}
+
+# Update all dependencies
+update:
+    go get -u ./...
+
 
 # docker build
 docker-build:
@@ -25,23 +34,39 @@ docker-build:
 # docker dev
 docker-dev:
 	# docker run -v /var/run/docker.sock:/var/run/docker.sock --rm -it mcp/stargate bash
-	docker compose run --rm stargate bash
+	AI_MCP_PORT={{AI_MCP_PORT}}  docker compose run --rm stargate bash
 
 # docker-serve:
 # 	# docker run -v /var/run/docker.sock:/var/run/docker.sock -p 58080:58080 --rm -it mcp/stargate /stargate
-# 	docker compose up -d
+# 	AI_MCP_PORT={{AI_MCP_PORT}} docker compose up -d
 
 # start the MCP servers - stargate
 docker-up:
-	docker compose up -d
+	AI_MCP_PORT={{AI_MCP_PORT}} docker compose up -d
 
 # stop the MCP servers - stargate
 docker-down:
     docker compose down
 
-# Build and start stargate and all MCP servers
-start:
-	@echo "Restarting stargate and all MCP servers..."
-	@docker compose build
-	@docker compose down
-	@docker compose up -d
+# Build and start Stargate and all MCP servers
+start: docker-build docker-down docker-up
+	@echo "MCP servers started"
+
+
+stop: docker-down
+	@echo "MCP servers stopped"
+
+test: unit integration
+
+unit:
+	@echo "Running unit tests..."
+	go test -s ./... -v
+	@echo "Unit tests completed"
+
+integration:
+	@echo "Running integration tests..."
+	@AI_MCP_PORT={{AI_MCP_PORT}} go test ./... -v -tags=integration -short=false -count=1
+	@echo "Integration tests completed"
+
+generate:
+    go generate ./...

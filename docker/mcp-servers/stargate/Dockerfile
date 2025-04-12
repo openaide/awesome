@@ -52,4 +52,4 @@ COPY --from=builder /stargate /stargate
 
 EXPOSE 58080
 
-CMD [ "/stargate", "serve", "--port", "58080" ]
+CMD [ "/stargate", "serve", "--port", "58080", "--config", "/config/mcp.jsonc" ]

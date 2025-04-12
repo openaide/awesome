@@ -5,37 +5,15 @@ import (
 	"log"
 	"os"
 
-	"github.com/openaide/stargate/server"
+	"github.com/openaide/stargate/proxy"
 	"github.com/spf13/cobra"
 )
 
-var port int
-var host string
+var config proxy.ProxyConfig
 
 func serve() {
-	ms := server.NewMCPServer(
-		"Stargate",
-		"1.0.0",
-		// server.WithResourceCapabilities(true, true),
-		// server.WithPromptCapabilities(true),
-		server.WithLogging(),
-	)
-
-	if err := ms.Initialize(); err != nil {
-		log.Fatalf("Failed to initialize MCP server: %v", err)
-	}
-
-	baseURL := fmt.Sprintf("http://%s:%v", host, port)
-	addr := fmt.Sprintf(":%v", port)
-
-	server.NewSSEServer(ms, baseURL)
-
-	sse := server.NewSSEServer(ms, baseURL)
-
-	log.Printf("SSE server listening on :%d", port)
-
-	if err := sse.Start(addr); err != nil {
-		log.Fatalf("Server error: %v", err)
+	if err := proxy.Serve(&config); err != nil {
+		log.Fatalf("Failed to start MCP server: %v", err)
 	}
 }
 
@@ -59,8 +37,9 @@ func init() {
 	}
 
 	// flags
-	serveCmd.Flags().IntVar(&port, "port", defaultPort, "Port to run the server")
-	serveCmd.Flags().StringVar(&host, "host", "localhost", "Host to bind the server")
+	serveCmd.Flags().IntVar(&config.Port, "port", defaultPort, "Port to run the server")
+	serveCmd.Flags().StringVar(&config.Host, "host", "localhost", "Host to bind the server")
+	serveCmd.Flags().StringVar(&config.Config, "config", "", "MCP configuration file")
 
 	rootCmd.AddCommand(serveCmd)
 }
