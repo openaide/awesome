@@ -66,8 +66,8 @@ clone-mcp-google:
 clone-fetcher-mcp:
     git clone --branch main https://github.com/jae-jae/fetcher-mcp.git local/fetcher-mcp || echo "Already cloned"
 
-clone-mcp-playwright:
-    git clone --branch main https://github.com/executeautomation/mcp-playwright.git local/mcp-playwright || echo "Already cloned"
+# clone-mcp-playwright:
+#     git clone --branch main https://github.com/executeautomation/mcp-playwright.git local/mcp-playwright || echo "Already cloned"
 
 clone-mcp-browser-use:
     git clone --branch main https://github.com/co-browser/browser-use-mcp-server.git local/mcp-browser-use || echo "Already cloned"
@@ -75,6 +75,8 @@ clone-mcp-browser-use:
 clone-github-mcp-server:
     git clone --branch main https://github.com/github/github-mcp-server.git local/github-mcp-server || echo "Already cloned"
 
+clone-ms-mcp-playwright:
+    git clone --branch main https://github.com/microsoft/playwright-mcp.git local/ms-mcp-playwright || echo "Already cloned"
 ##
 
 build-redis:
@@ -130,9 +132,12 @@ build-fetcher:
     cp mcp-fetcher/Dockerfile local/fetcher-mcp/Dockerfile
     cd local/fetcher-mcp && docker build -t mcp/fetcher -f Dockerfile .
 
-build-playwright:
-    cp mcp-playwright/Dockerfile local/mcp-playwright/Dockerfile
-    cd local/mcp-playwright && docker build -t mcp/playwright -f Dockerfile .
+# build-playwright:
+#     cp mcp-playwright/Dockerfile local/mcp-playwright/Dockerfile
+#     cd local/mcp-playwright && docker build -t mcp/playwright -f Dockerfile .
+
+build-playwright: clone-ms-mcp-playwright
+    cd local/ms-mcp-playwright && docker build -t mcp/ms-playwright -f Dockerfile .
 
 build-browser-use:
     cd local/mcp-browser-use && docker build -t mcp/browser-use -f Dockerfile .

@@ -45,27 +45,27 @@
     //     "CHROME_PATH": ""
     //   }
     // },
-    "playwright": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "mcp/playwright"
-      ]
-    },
-    "puppeteer": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "--init",
-        "-e",
-        "DOCKER_CONTAINER=true",
-        "mcp/puppeteer"
-      ]
-    },
+    // "playwright": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "mcp/playwright"
+    //   ]
+    // },
+    // "puppeteer": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "--init",
+    //     "-e",
+    //     "DOCKER_CONTAINER=true",
+    //     "mcp/puppeteer"
+    //   ]
+    // },
     "searxng": {
       "command": "docker",
       "args": ["run", "-i", "--rm", "-e", "SEARXNG_URL", "mcp/searxng"],

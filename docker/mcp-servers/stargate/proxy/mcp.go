@@ -72,7 +72,7 @@ func (r *McpConfig) Load(data []byte) error {
 type McpClientSession struct {
 	cfg *McpServerConfig
 
-	client *client.StdioMCPClient
+	client *client.Client
 }
 
 func (r *McpClientSession) Connect(ctx context.Context) error {

@@ -20,6 +20,10 @@
     },
     // "playwright": {
     //   "command": "docker",
+    //   "args": ["run", "-i", "--rm", "--init", "mcp/ms-playwright"]
+    // },
+    // "playwright": {
+    //   "command": "docker",
     //   "args": [
     //     "run",
     //     "-i",
@@ -100,25 +104,24 @@
       "command": "docker",
       "args": ["run", "-i", "--rm", "mcp/fetch"]
     },
-    
-    "github": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "-e",
-        "GITHUB_PERSONAL_ACCESS_TOKEN",
-        "mcp/github",
-        "/server/github-mcp-server",
-        "--read-only",
-        "--enable-command-logging",
-        "stdio"
-      ],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${AI_GH_TOKEN}"
-      }
-    },
+    // "github": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run",
+    //     "-i",
+    //     "--rm",
+    //     "-e",
+    //     "GITHUB_PERSONAL_ACCESS_TOKEN",
+    //     "mcp/github",
+    //     "/server/github-mcp-server",
+    //     "--read-only",
+    //     "--enable-command-logging",
+    //     "stdio"
+    //   ],
+    //   "env": {
+    //     "GITHUB_PERSONAL_ACCESS_TOKEN": "${AI_GH_TOKEN}"
+    //   }
+    // },
     "time": {
       "command": "docker",
       "args": ["run", "-i", "--rm", "mcp/time"]

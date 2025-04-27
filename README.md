@@ -117,6 +117,13 @@ The following tools are grouped by their main features. The AI landscape is chan
 * [Cline](https://github.com/cline/cline.git)
 * [Aider Composer](https://github.com/lee88688/aider-composer.git)
 
+### MCP
+
+* [MCP](https://github.com/modelcontextprotocol/modelcontextprotocol)
+* [Docker MCP Servers](https://hub.docker.com/catalogs/mcp)
+* [AWS MCP](https://github.com/awslabs/mcp)
+* [Awesome MCP Servers](https://github.com/punkpeye/awesome-mcp-servers)
+
 ### Code generation
 
 * [OpenHands](https://docs.all-hands.dev/)
@@ -182,6 +189,7 @@ The following tools are grouped by their main features. The AI landscape is chan
 
 ## How to prompt
 
+* [GPT-4.1 Prompting Guide](https://cookbook.openai.com/examples/gpt4-1_prompting_guide)
 * [PromptTools](https://github.com/hegelai/prompttools)
 * [Prompt Engineering Guide](https://www.promptingguide.ai/)
 * [Prompting Guides](https://cookbook.openai.com/articles/related_resources#prompting-guides)
