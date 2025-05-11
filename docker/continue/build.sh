@@ -4,6 +4,8 @@ set -xeuo pipefail
 
 OPENAIDE_BASE=$(git rev-parse --show-toplevel)
 
+# VERSION=$(git describe --tags --abbrev=0)
+
 APP_DIR="${OPENAIDE_BASE}/docker/continue/local/continue"
 
 ## dependencies

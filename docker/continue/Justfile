@@ -6,11 +6,13 @@ default:
     @just --list
 
 # Variables
-APP_VERSION := "v1.1.17-vscode"
+# APP_VERSION := "v1.1.17-vscode"
+APP_VERSION := "$(cd local/continue > /dev/null 2>&1; git checkout main > /dev/null 2>&1 && git describe --tags --abbrev=0)"
 APP_REPO_URL := "https://github.com/continuedev/continue.git"
 TARGET_DIR := "local/continue"
 
-VSCE_TARGET := "$(uname | tr '[:upper:]' '[:lower:]')-$(uname -m)"                        
+# VSCE_TARGET := "$(uname | tr '[:upper:]' '[:lower:]')-$(uname -m)"                        
+VSCE_TARGET := "$(uname | tr '[:upper:]' '[:lower:]')-amd64"                        
 
 # Info 
 info:
@@ -24,7 +26,7 @@ clone:
     git clone --branch {{APP_VERSION}} {{APP_REPO_URL}} {{TARGET_DIR}} || echo "Directory exists."
 
 checkout:
-    @if [ -d "{{TARGET_DIR}}" ]; then \
+    if [ -d "{{TARGET_DIR}}" ]; then \
         cd {{TARGET_DIR}} && git fetch && git checkout {{APP_VERSION}}; \
     else \
         echo "Directory {{TARGET_DIR}} does not exist. Please clone first."; \

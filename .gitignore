@@ -16,3 +16,5 @@ docker/gateway/etc/service/traefik/index.html*
 docker/gpt-researcher/gptr/outputs/*
 ##
 __debug_bin*
+
+.DS_Store

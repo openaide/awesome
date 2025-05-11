@@ -3,3 +3,6 @@ node_modules
 #
 local/continue/extensions/vscode/build/
 local/extension
+
+#
+.DS_Store
